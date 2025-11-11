@@ -3663,6 +3663,48 @@ main {
   vertical-align: middle;
 }
 
+/* searchbar -------------------------------------------------------------------------------------------*/
+
+.searchContainer {
+  margin-left:16px;
+  padding: 0 auto;
+  border: 0;
+  border-radius: 20px;
+  color: rgb(29, 29, 29);
+  font-size: 14px;
+  background-color: #ececec;
+}
+
+#searchIcon {
+  margin: 4px;
+  padding: 2.5px;
+  height: 25px;
+  vertical-align: middle;
+  cursor: pointer;
+  opacity: 0.4;
+}
+
+.searchInput {
+  display: flex;
+  flex-wrap: inherit;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+#input {
+  width: 100%;
+  height: 30px;
+  outline: none;
+  border: none;
+  background-color: #ececec;
+  border-radius: 20px;
+}
+
+#input:focus {
+  border: none;
+  box-shadow: none;
+}
+
 .NavbarSub {
   flex-direction: row;
   display: flex;
@@ -3716,8 +3758,9 @@ main {
   position: relative;
 }
 
-.navbar .NavbarSub li .navLink:before, 
-.navbar .NavbarSub li .navIconLink:before {
+.navbar .NavbarSub li .navLink:before,
+.navbar .NavbarSub li .navIconLink:before,
+.navbar .NavbarSub li .navSearch:before {
   content: "";
   position: absolute;
   bottom: 0;
@@ -3934,17 +3977,22 @@ footer .navbar .NavbarSub li .navLinkFooter:before {
   transition: 0.15s all ease-out;
 }
 
+@media (max-width: 995px) {
+  .searchContainer {
+    width: 25%;
+  }
+}
 
-
-
-
-
-
-
-@media (max-width: 700px) {
+@media (max-width: 720px) {
   .navContainer .centerPosition {
     width: 100%;
     text-align: center;
+  }
+
+  .searchContainer {
+    margin: 0px;
+    margin-top: 10px;
+    width: 100%;
   }
 
   .NavbarSub {
@@ -3967,7 +4015,7 @@ footer .navbar .NavbarSub li .navLinkFooter:before {
   }
 }
 
-@media (min-width: 701px) {
+@media (min-width: 721px) {
   .hero {
     padding: 20px 5%;
   }
@@ -3981,9 +4029,13 @@ footer .navbar .NavbarSub li .navLinkFooter:before {
   .productContainer {
     width: 33.33333333%;
   }
+
+  .searchContainer {
+    width: 25%;
+  }
 }
 
-@media (min-width: 992px) {
+@media (min-width: 995px) {
   .navbar .NavbarSub li {
     margin-left: 15px;
     margin-right: 15px;
@@ -3996,11 +4048,18 @@ footer .navbar .NavbarSub li .navLinkFooter:before {
   .productContainer {
     width: 25%;
   }
+  .searchContainer {
+    width: 30%;
+  }
 }
 
 @media (min-width: 1400px) {
   .hero h1 {
     font-size: 40px;
+  }
+
+  .searchContainer {
+    width: 40%;
   }
 }
 
