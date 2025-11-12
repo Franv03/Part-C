@@ -1,9 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" import="utente.User,prodotto.ProductBean"%> <!-- CARRELLO!!!!!!!!!!!!!!!!!!!!!!!!!!! -->  
+ 
+<%
+	//User user = (User)session.getAttribute("user");
+	User user = new User();
+	user.setAdmin(true);
+%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
 <title>Insert title here</title>
 </head>
 <body>
@@ -27,8 +32,16 @@
 				<ul class="NavbarSub">
 					<li><a class="navLink" href="index.html">Home</a></li>
 					<li><a class="navLink" href="shop.html">Shop</a></li>
-					<li><a class="navIconLink" id="iconLink" href="#"><img class="user" src="img/icons/user.svg"></a></li>
-					<li><a class="navIconLink" href="#"><img class="navIcon" src="img/icons/admin.svg"></a></li>
+					<%if(user == null){%>
+						<li><a class="navIconLink" id="iconLink" href="#"><img class="user" src="img/icons/user.svg"></a></li>
+						
+					<%}else if(user != null && !user.isAdmin()){%>
+						<li><a class="navIconLink" id="iconLink" href="#"><img class="user" src="img/icons/user.svg"></a></li>
+						
+					<%}else if(user != null && user.isAdmin()){%>
+						<li><a class="navIconLink" id="iconLink" href="#"><img class="user" src="img/icons/user.svg"></a></li>
+						<li><a class="navIconLink" href="#"><img class="navIcon" src="img/icons/admin.svg"></a></li>
+					<%}%>
 					<li><a class="navIconLink" href="cart.html"><img class="navIcon" src="img/icons/cart.svg"></a></li>
 				</ul>
 			</div>

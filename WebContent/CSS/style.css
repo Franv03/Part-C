@@ -3874,7 +3874,7 @@ main {
   margin-bottom: 30px;
   position: relative;
   top: 0;
-  width: 100%;
+  width: 90%;
   transition: 0.3s all ease;
 }
 
@@ -3942,6 +3942,27 @@ main {
 
 .productContainer .productItem:hover:before {
   height: 70%;
+}
+
+.productContainer #empty:before {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+  content: "";
+  background: transparent;
+  height: 0%;
+  z-index: -1;
+  border-radius: 10px;
+  transition: none;
+}
+
+.productContainer #empty:hover .productImg {
+  top: 0;
+}
+
+#emptyImg {
+	opacity: 0.6;
 }
 
 footer {

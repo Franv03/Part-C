@@ -49,7 +49,7 @@ public class ProductDaoDataSource implements IProductDAO<ProductBean> {
         PreparedStatement preparedStatement = null;
 
         String insertNewSQL = "INSERT INTO " + ProductDaoDataSource.TABLE_NAME
-                + " (nome, prezzo, quantità, tipo, foto) VALUES (?, ?, ?, ?, ?)";
+                + " (nome, prezzo, quantita, categoria, foto) VALUES (?, ?, ?, ?, ?)";
         try {
             connection = ds.getConnection();
             preparedStatement = connection.prepareStatement(insertNewSQL);

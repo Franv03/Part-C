@@ -1,12 +1,18 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" import="java.util.ArrayList,prodotto.ProductBean"%> <!-- CARRELLO!!!!!!!!!!!!!!!!!!!!!!!!!!! -->  
+ 
+<%
+ArrayList<ProductBean> prodotti = new ArrayList(); 
+
+
+%>
+
+
 <!doctype html>
 <html lang="it">
-
 <head>
 	<meta charset="utf-8">
-	<meta name="description" content="" />
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-	<link href="css/tiny-slider.css" rel="stylesheet">
-	<link href="CSS/style1.css" rel="stylesheet">
+	<link href="CSS/style.css" rel="stylesheet">
 	<link rel="icon" type="image/svg+xml" href="img/logo/logo.svg">
 	<title>Part-C</title>
 </head>
@@ -30,7 +36,15 @@
 
 		<section class="homeShop">
 			<div class="homeRow">
-
+			<%if(prodotti.isEmpty()){%>
+				<div class="productContainer">
+					<a class="productItem" id="empty">
+						<img src="img/products/emptyProduct.png" class="ProductImage productImg" id="emptyImg">
+						<h3 class="productTitle">SHOP VUOTO</h3>
+					</a>
+				</div>
+			<%}else if(!prodotti.isEmpty()) {%>
+			
 				<div class="productContainer">
 					<a class="productItem" href="#">
 						<img src="img/product-3.png" class="ProductImage productImg">
@@ -54,7 +68,7 @@
 						</span>
 					</a>
 				</div>
-
+		<%}%>
 			</div>
 		</section>
 	</main>

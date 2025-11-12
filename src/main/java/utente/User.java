@@ -9,6 +9,8 @@ public class User {
 	this.isAdmin = isAdmin;
 	}
 	
+	public User(){}
+	
 	public String getNome() {
 		return nome;
 	}
