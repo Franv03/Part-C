@@ -1,10 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.ArrayList,prodotto.ProductBean"%> <!-- CARRELLO!!!!!!!!!!!!!!!!!!!!!!!!!!! -->  
+    pageEncoding="UTF-8" import="java.util.ArrayList,prodotto.ProductBean,java.text.DecimalFormat"%> <!-- CARRELLO!!!!!!!!!!!!!!!!!!!!!!!!!!! -->  
  
 <%
-ArrayList<ProductBean> prodotti = new ArrayList(); 
+HttpSession sessione = request.getSession();
+ArrayList<ProductBean> prodotti = (ArrayList<ProductBean>)sessione.getAttribute("products");
+DecimalFormat df = new DecimalFormat("#.##");
 
-
+if(prodotti==null || prodotti.isEmpty()){
+	response.sendRedirect(request.getContextPath()+"/Index");
+	return;
+}
+//ArrayList<ProductBean> prodotti = new ArrayList(); 
 %>
 
 
@@ -12,6 +18,7 @@ ArrayList<ProductBean> prodotti = new ArrayList();
 <html lang="it">
 <head>
 	<meta charset="utf-8">
+	<script type="text/javascript" src="JS/scripts.js"></script>
 	<link href="CSS/style.css" rel="stylesheet">
 	<link rel="icon" type="image/svg+xml" href="img/logo/logo.svg">
 	<title>Part-C</title>
@@ -43,54 +50,39 @@ ArrayList<ProductBean> prodotti = new ArrayList();
 						<h3 class="productTitle">SHOP VUOTO</h3>
 					</a>
 				</div>
+				
 			<%}else if(!prodotti.isEmpty()) {%>
-				
+				<%for(ProductBean p : prodotti) {%>
 				<div class="productContainer">
-					<a class="productItem" href="#">
-						<img src="img/product-3.png" class="ProductImage productImg">
-						<h3 class="productTitle">Nordic Chair</h3>
-						<strong class="productPrice">$50.00</strong>
+					<a class="productItem">
+						<img src="<%=request.getServletContext().getContextPath()%>/<%=p.getPhoto()%>" class="ProductImage productImg">
+						<h3 class="productTitle"><%=p.getName()%></h3>
+						<strong class="productPrice"><%=df.format(p.getPrice())%> &#128;</strong>
 
-						<span class="crossIcon">
+						<span class="crossIcon" onclick="openPopup('<%=p.getCode()%>')">
 							<img src="img/icons/cross.svg" class="ProductImage">
 						</span>
 					</a>
 				</div>
-				
-				<div class="productContainer">
-					<a class="productItem" href="#">
-						<img src="img/product-3.png" class="ProductImage productImg">
-						<h3 class="productTitle">Nordic Chair</h3>
-						<strong class="productPrice">$50.00</strong>
-
-						<span class="crossIcon">
-							<img src="img/icons/cross.svg" class="ProductImage">
-						</span>
-					</a>
-				</div>
-		<%}%>
+			<%}}%>
 			</div>
+				<div class="popup-overlay" id="popupOverlay">
+					<div class="popup" id="popup">
+						<a class="close" id="closePopup" onclick="closePopupFunc()">x</a>
+						<div class="popup-content">
+							<p>inserisci quantita':</p>
+							<div class="wau">
+								<input type="number" placeholder="quantita'" id="inputQty"
+									min="1">
+							</div>
+							<a class="addcart">Aggiungi al carrello</a>
+						</div>
+					</div>
+				</div>
 		</section>
 	</main>
-
-	<footer class="navbar" id="footer">
-		<div class="navContainer">
-			<div class="centerPosition" id="footerPosition">
-				<img class="logo" src="img/logo/logo.svg">
-				<a class="navBrand">P<span>art-</span>C</a>
-			</div>
-			<div class="centerPosition">
-				<ul class="NavbarSub">
-					<li><a class="navLinkFooter" href="#">Contatti</a></li>
-					<li><a class="navLinkFooter" href="#">Chi siamo</a></li>
-				</ul>
-			</div>
-		</div>
-	</footer>
-
-	<script src="js/bootstrap.bundle.min.js"></script>
-	<script src="js/tiny-slider.js"></script>
-	<script src="js/custom.js"></script>
+	<jsp:include page='footer.html'>
+		<jsp:param name="PageTitle" value="index"/>
+	</jsp:include>
 </body>
-
 </html>

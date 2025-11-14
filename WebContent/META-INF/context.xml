@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+<Resource name="jdbc/PartC" auth="Container"
+          type="javax.sql.DataSource"
+          driverClassName="com.mysql.cj.jdbc.Driver"
+          username="root"
+          password="admin"
+          url="jdbc:mysql://localhost:3306/PartC?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;autoReconnect=true&amp;serverTimezone=UTC&amp;useSSL=false&amp;allowPublicKeyRetrieval=true"
+          maxTotal="20"
+          maxIdle="10"
+          maxWaitMillis="-1"/>
+
+</Context>

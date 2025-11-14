@@ -3965,6 +3965,102 @@ main {
 	opacity: 0.6;
 }
 
+.popup-overlay {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.5);
+	z-index: 90;
+}
+
+.popup {
+	font-family: Arial, sans-serif;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background: #fff;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	z-index: 91;
+}
+
+.popup-content {
+	text-align: center;
+	z-index: 92;
+}
+
+.popup .close {
+	padding: 0px 10px 0px 0px;
+	height: fit-content;
+	width: fit-content;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	font-size: 20px;
+	cursor: pointer;
+	color: #333;
+}
+
+.popup #emailInput {
+	display: inline-block;
+	width: 35em;
+	height: 3em;
+	padding: 0px 15px;
+	background-color: transparent;
+	border: none;
+	border-radius: 20px;
+}
+
+.popup a {
+	display: inline-block;
+	padding: 8px 15px;
+	border-radius: 30px;
+	width: 165px;
+	text-align: center;
+	transition: all .2s;
+	margin: 5px 0;
+}
+
+.popup .addcart {
+	background-color: #f7444e;
+	border: 1px solid #f7444e;
+	color: #ffffff;
+}
+
+.addcart:hover {
+	background-color: transparent;
+	color: #f7444e;
+}
+
+#inputQty {
+	width: 80%;
+	height: 3em;
+	padding: 0px 15px;
+	background-color: transparent;
+	border: none;
+	border-radius: 20px;
+}
+
+#inputQty:focus {
+	outline: none;
+}
+
+.wau {
+	width: max-content;
+	padding: 0;
+	border: 0;
+	border-radius: 20px;
+	color: rgb(29, 29, 29);
+	font-size: 14px;
+	background-color: #ececec;
+	margin: 20px;
+}
+
 footer {
   background: #3b5d50;
   height: fit-content;

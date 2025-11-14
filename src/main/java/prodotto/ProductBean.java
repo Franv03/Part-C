@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class ProductBean implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
-	private String Categorie[] = {"Scheda madre", "Alimentatore", "Ram", "Processore", "Scheda Video", "Case"};
+	private String Categorie[] = {"Motherboard", "PSU", "RAM", "CPU", "GPU", "STORAGE" ,"Case"};
 	
 	public ProductBean() {
 		this.code = -1;

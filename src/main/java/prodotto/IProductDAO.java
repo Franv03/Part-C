@@ -16,4 +16,5 @@ public interface IProductDAO<T> {
 		 public ArrayList<T> doRetrieveAvailable() throws SQLException;
 		 public ArrayList<T> doRetrieveAll(String order) throws SQLException;
 		 public void doBuy(ArrayList<T> products, User u) throws SQLException;
+		 public ArrayList<ProductBean> doRetriveByMinPrice() throws SQLException;
 }
