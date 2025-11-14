@@ -4,7 +4,7 @@
 <%
 	//User user = (User)session.getAttribute("user");
 	User user = new User();
-	user.setAdmin(true);
+	user.setAdmin(false);
 %>
 <!DOCTYPE html>
 <html>

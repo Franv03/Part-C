@@ -1,6 +1,7 @@
 package prodotto;
 
-import java.sql.Connection;        
+import java.sql.Connection;
+
 import java.sql.Date;              
 import java.sql.PreparedStatement; 
 import java.sql.ResultSet;         
@@ -42,7 +43,7 @@ public class ProductDaoDataSource implements IProductDAO<ProductBean> {
     }
 
  
-    // Inserisce un nuovo prodotto nel database
+    // Aggiunta prodotto
     @Override
     public void doSave(ProductBean product) throws SQLException {
     	Connection connection = null;
@@ -53,11 +54,11 @@ public class ProductDaoDataSource implements IProductDAO<ProductBean> {
         try {
             connection = ds.getConnection();
             preparedStatement = connection.prepareStatement(insertNewSQL);
-            preparedStatement.setString(1, product.getNome());
-            preparedStatement.setDouble(2, product.getPrezzo());
-            preparedStatement.setInt(3, product.getQuantita());
-            preparedStatement.setString(4, product.getCategoria());
-            preparedStatement.setString(5, product.getFoto());
+            preparedStatement.setString(1, product.getName());
+            preparedStatement.setDouble(2, product.getPrice());
+            preparedStatement.setInt(3, product.getQuantity());
+            preparedStatement.setString(4, product.getCategory());
+            preparedStatement.setString(5, product.getPhoto());
             preparedStatement.executeUpdate();
         } finally {
             try {
@@ -71,44 +72,152 @@ public class ProductDaoDataSource implements IProductDAO<ProductBean> {
     }
         
 
+    // Aggiorna prodotto
     @Override
     public void doUpdate(ProductBean product) throws SQLException {
-        // Aggiorna le informazioni di un prodotto esistente
-    }
+    	Connection connection = null;
+		PreparedStatement preparedStatement = null;
 
+		ProductBean oldBean = new ProductBean();
+
+		String updateSQL = "UPDATE " + ProductDaoDataSource.TABLE_NAME + 
+		" SET nome = ?,quantita = ?, categoria = ?, prezzo = ?, foto = ?";
+
+		try {
+			connection = ds.getConnection();
+			preparedStatement = connection.prepareStatement(selectSQL);
+			preparedStatement.setInt(1, product.getCode());
+
+			ResultSet rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				oldBean.setCode(rs.getInt("ID_prodotto"));
+				oldBean.setName(rs.getString("nome"));
+				oldBean.setCategory(rs.getString("categoria"));
+				oldBean.setPhoto(rs.getString("foto"));
+				oldBean.setPrice((float)rs.getDouble("prezzo"));
+				
+				
+			preparedStatement = connection.prepareStatement(updateSQL);
+			if(product.getName()== null) {preparedStatement.setString(1, oldBean.getName());}
+			else preparedStatement.setString(1, product.getName());
+			
+			if(product.getCategory()== null) {preparedStatement.setString(1, oldBean.getCategory());}
+			else preparedStatement.setString(1, product.getCategory());
+			
+			if(product.getPrice()< 0) {preparedStatement.setDouble(1, oldBean.getPrice());}
+			else preparedStatement.setDouble(1, product.getPrice());
+			
+			if(product.getPhoto()== null) {preparedStatement.setString(1, oldBean.getPhoto());}
+			else preparedStatement.setString(1, product.getPhoto());
+			}
+
+		} finally {
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} finally {
+				if (connection != null)
+					connection.close();
+			}
+		}
+	}
+
+    // Rimozione prodotto
     @Override
-    public boolean doRemove(int codice) throws SQLException {
-        // Imposta disponibile = false per il prodotto
-        return false;
-    }
+    public boolean doRemove(int code) throws SQLException {
+    	Connection connection = null;
+		PreparedStatement preparedStatement = null;
 
+		int result = 0;
+
+		String deleteSQL = "UPDATE " + ProductDaoDataSource.TABLE_NAME + " SET disponibile = 'false' WHERE ID_prodotto = ?";
+
+		try {
+			connection = ds.getConnection();
+			preparedStatement = connection.prepareStatement(deleteSQL);
+			preparedStatement.setInt(1, code);
+
+			result = preparedStatement.executeUpdate();
+
+		} finally {
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} finally {
+				if (connection != null)
+					connection.close();
+			}
+		}
+		return (result != 0);
+	}
+
+
+    // Cerca prodotto per codice
     @Override
-    public ProductBean doRetrieveByKey(int codice) throws SQLException {
-        // Restituisce un prodotto cercandolo per codice
-        return null;
+    public ProductBean doRetrieveByKey(int code) throws SQLException {
+    	Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
+		ProductBean bean = new ProductBean();
+
+		//String selectSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME + " WHERE ID_prodotto = ?";
+
+		try {
+			connection = ds.getConnection();
+			preparedStatement = connection.prepareStatement(selectSQL);
+			preparedStatement.setInt(1, code);
+
+			ResultSet rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				bean.setCode(rs.getInt("ID_prodotto"));
+				bean.setName(rs.getString("nome"));
+				bean.setCategory(rs.getString("categoria"));
+				bean.setPhoto(rs.getString("foto"));
+				bean.setPrice((float)rs.getDouble("prezzo"));
+			
+			
+			}
+
+		} finally {
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} finally {
+				if (connection != null)
+					connection.close();
+			}
+		}
+		return bean;
+      
     }
 
+    // Cerca prodotto per nome
     @Override
     public ArrayList<ProductBean> doRetrieveByName(String nome) throws SQLException {
-        // Restituisce tutti i prodotti con nome simile
+        
         return null;
     }
 
+    // Cerca prodotto per categoria
     @Override
     public ArrayList<ProductBean> doRetrieveByCategory(String categoria) throws SQLException {
-        // Restituisce tutti i prodotti della stessa categoria
+        
         return null;
     }
 
+    //Prodotti disponibili
     @Override
     public ArrayList<ProductBean> doRetrieveAvailable() throws SQLException {
-        // Restituisce solo i prodotti disponibili
+        
         return null;
     }
 
+    // Tutti i prodotti
     @Override
     public ArrayList<ProductBean> doRetrieveAll(String order) throws SQLException {
-        // Restituisce tutti i prodotti (con eventuale ordinamento)
+        
         return null;
     }
 

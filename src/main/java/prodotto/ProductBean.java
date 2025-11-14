@@ -2,86 +2,96 @@ package prodotto;
 
 import java.io.Serializable;
 
+/**
+ * 
+ */
 public class ProductBean implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	private String Categorie[] = {"Scheda madre", "Alimentatore", "Ram", "Processore", "Scheda Video", "Case"};
 	
 	public ProductBean() {
-		this.codice = -1;
-		this.nome = "";
-		this.prezzo = -1;
-		this.quantita = -1;
-		this.categoria = "";
-		this.foto = null;
-		this.disponibile = true;
+		this.code = -1;
+		this.name = "";
+		this.price = -1;
+		this.quantity = -1;
+		this.category = "";
+		this.photo = null;
+		this.available = true;
 	}
 	
-	public int getCodice() {
-		return this.codice;
+	public int getCode() {
+		return this.code;
 	}
-	public String getNome() {
-		return this.nome;
+	public String getName() {
+		return this.name;
 	}
-	public double getPrezzo() {
-		return this.prezzo;
+	public double getPrice() {
+		return this.price;
 	}
-	public int getQuantita() {
-		return this.quantita;
+	public int getQuantity() {
+		return this.quantity;
 	}
-	public String getCategoria() {
-		return this.categoria;
+	public String getCategory() {
+		return this.category;
 	}
-	public String getFoto() {
-		return this.foto;
+	public String getPhoto() {
+		return this.photo;
 	}
 	public boolean isAvailable() {
-		return this.disponibile;
+		return this.available;
 	}
 	
 	
 	
-	public void setCodice(int codice) {
-		this.codice = codice;
+
+	public void setCode(int code) {
+		this.code = code;
 	}
-	public void setNome(String nome) {
-		this.nome = nome;
+
+	public void setName(String name) {
+		this.name = name;
 	}
-	public void setPrezzo(double prezzo) {
-		this.prezzo = prezzo;
+
+	public void setPrice(double price) {
+		this.price = price;
 	}
-	public void setQuantita(int quantita) {
-		this.quantita = quantita;
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
 	}
-	public void setCategoria(String categoria) {
+
+	public void setCategory(String category) {
 	    for (String c : Categorie) {
-	        if (categoria.equals(c)) {
-	            this.categoria = categoria;
+	        if (category.equals(c)) {
+	            this.category = category;
 	            break;
 	        }
 	    }
 	}
-	public void setFoto(String foto) {
-		this.foto = foto;
+	
+	public void setPhoto(String photo) {
+		this.photo = photo;
 	}
-	public void setAvailable(boolean disponibile) {
-		this.disponibile = disponibile;
+
+	public void setAvailable(boolean available) {
+		this.available = available;
 	}
 	
 	@Override
 	public String toString() {
 		return getClass().getName() +
 				"[" +
-				"codice = " + codice + ", nome = " + nome + ", prezzo = " + prezzo + ", quantita = " + quantita +", categoria = " + categoria + ", foto = " + foto + ", disponibile = " + disponibile +
+				"codice = " + code + ", nome = " + name + ", prezzo = " + price + ", quantita = " + quantity +", categoria = " + category + ", foto = " + photo + ", disponibile = " + available +
 				"]";
 	}
 	
-	private int codice;
-	private String nome;
-	private double prezzo;
-	private Integer quantita;
-	private String categoria;
-	private String foto;
-	private boolean disponibile;
+	private int code;
+	private String name;
+	private double price;
+	private Integer quantity;
+	private String category;
+	private String photo;
+	private boolean available;
 	
 }

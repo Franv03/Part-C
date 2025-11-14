@@ -44,7 +44,7 @@ ArrayList<ProductBean> prodotti = new ArrayList();
 					</a>
 				</div>
 			<%}else if(!prodotti.isEmpty()) {%>
-			
+				
 				<div class="productContainer">
 					<a class="productItem" href="#">
 						<img src="img/product-3.png" class="ProductImage productImg">
