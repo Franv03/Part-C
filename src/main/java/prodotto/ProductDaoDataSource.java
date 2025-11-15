@@ -41,7 +41,6 @@ public class ProductDaoDataSource implements IProductDAO<ProductBean> {
 			System.out.println("Error: " + e.getMessage());
 		}
 	}
-	
 
 	// Aggiunta prodotto
 	@Override
@@ -201,36 +200,237 @@ public class ProductDaoDataSource implements IProductDAO<ProductBean> {
 
 	// Cerca prodotto per nome
 	@Override
-	public ArrayList<ProductBean> doRetrieveByName(String nome) throws SQLException {
+	public ArrayList<ProductBean> doRetrieveByName(String name) throws SQLException {
 
-		return null;
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
+		ArrayList<ProductBean> beanz = new ArrayList<ProductBean>();
+
+		String selectNameSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME + " WHERE nome LIKE ?";
+
+		try {
+			connection = ds.getConnection();
+			preparedStatement = connection.prepareStatement(selectNameSQL);
+			preparedStatement.setString(1, "%" + name + "%");
+
+			ResultSet rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				ProductBean bean = new ProductBean();
+				bean.setCode(rs.getInt("ID_prodotto"));
+				bean.setName(rs.getString("nome"));
+				bean.setCategory(rs.getString("categoria"));
+				bean.setPhoto(rs.getString("foto"));
+				bean.setPrice((float) rs.getDouble("prezzo"));
+				beanz.add(bean);
+
+			}
+
+		} finally {
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} finally {
+				if (connection != null)
+					connection.close();
+			}
+		}
+		return beanz;
 	}
+
 
 	// Cerca prodotto per categoria
 	@Override
 	public ArrayList<ProductBean> doRetrieveByCategory(String categoria) throws SQLException {
 
-		return null;
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
+		ArrayList<ProductBean> beanz = new ArrayList<ProductBean>();
+
+		String selectNameSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME + " WHERE tipo = ?";
+
+		
+		try {
+			connection = ds.getConnection();
+			preparedStatement = connection.prepareStatement(selectNameSQL);
+			preparedStatement.setString(1, categoria);
+
+			ResultSet rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				ProductBean bean = new ProductBean();
+				bean.setCode(rs.getInt("ID_prodotto"));
+				bean.setName(rs.getString("nome"));
+				bean.setCategory(rs.getString("categoria"));
+				bean.setPhoto(rs.getString("foto"));
+				bean.setPrice((float)rs.getDouble("prezzo"));
+				beanz.add(bean);
+			
+			}
+
+		} finally {
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} finally {
+				if (connection != null)
+					connection.close();
+			}
+		}
+		return beanz;
 	}
+
 
 	// Prodotti disponibili
 	@Override
-	public ArrayList<ProductBean> doRetrieveAvailable() throws SQLException {
+	public synchronized ArrayList<ProductBean> doRetrieveAvailable() throws SQLException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
 
-		return null;
+		ArrayList<ProductBean> products = new ArrayList<ProductBean>();
+
+		String selectSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME + " WHERE disponibile = TRUE";
+		connection = ds.getConnection();
+		try {
+
+			preparedStatement = connection.prepareStatement(selectSQL);
+
+			ResultSet rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				ProductBean bean = new ProductBean();
+
+				bean.setQuantity(rs.getInt("quantita"));
+				bean.setCategory(rs.getString("categoria"));
+				bean.setName(rs.getString("nome"));
+				bean.setPrice(rs.getFloat("prezzo"));
+				bean.setPhoto(rs.getString("foto"));
+				bean.setAvailable(rs.getBoolean("disponibile"));
+
+				products.add(bean);
+			}
+
+		} finally {
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} finally {
+				if (connection != null)
+					connection.close();
+			}
+		}
+		return products;
 	}
 
 	// Tutti i prodotti
 	@Override
 	public ArrayList<ProductBean> doRetrieveAll(String order) throws SQLException {
 
-		return null;
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
+		ArrayList<ProductBean> products = new ArrayList<ProductBean>();
+
+		String selectSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME;
+		connection = ds.getConnection();
+		try {
+		
+		if (order != null && !order.equals("")) {
+			selectSQL += " ORDER BY ?";
+			preparedStatement = connection.prepareStatement(selectSQL);
+			preparedStatement.setString(1, order);
+		}else {
+			preparedStatement = connection.prepareStatement(selectSQL);
+		}
+
+			ResultSet rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				ProductBean bean = new ProductBean();
+
+				
+				bean.setCategory(rs.getString("categoria"));
+				bean.setName(rs.getString("nome"));
+				bean.setPrice(rs.getFloat("prezzo"));
+				bean.setPhoto(rs.getString("foto"));
+				bean.setAvailable(rs.getBoolean("disponibile"));
+				
+				products.add(bean);
+			}
+
+		} finally {
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} finally {
+				if (connection != null)
+					connection.close();
+			}
+		}
+		return products;
 	}
 
+	// Registra un ordine e i prodotti acquistati
 	@Override
 	public void doBuy(ArrayList<ProductBean> products, User u) throws SQLException {
-		// Registra un ordine e i prodotti acquistati
+		String Ordinesql = "INSERT INTO ordine(data_acquisto, email) VALUES(?,?)";
+		String Prodottisql = "INSERT INTO acquisto(ID_ordine,q_acquisto,nome,tipo,prezzo) VALUES(?,?,?,?,?)";
+		
+		ArrayList<ProductBean> catalogati = new ArrayList<ProductBean>();
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		connection = ds.getConnection();
+		try {
+			//creo l'ordine
+			preparedStatement = connection.prepareStatement(Ordinesql,Statement.RETURN_GENERATED_KEYS);
+			preparedStatement.setDate(1, Date.valueOf(java.time.LocalDate.now()));
+			preparedStatement.setString(2, u.getEmail());
+			preparedStatement.execute();
+			ResultSet id = preparedStatement.getGeneratedKeys();
+			int generatedId = -1;
+			if (id.next()) {generatedId = id.getInt(1); }
+			else System.out.println("ProductDaoDataSource + ERRORE KEY");
+			System.out.println("ProductDaoDataSource: Ordine eseguito +" + generatedId);
+			preparedStatement.close();
+					
+			//aggiungo i prodotti acquistati all'ordine
+			preparedStatement = connection.prepareStatement(Prodottisql);
+			preparedStatement.setInt(1, generatedId);
+			
+			for(ProductBean p: products) {
+				String currentProduct = p.getName();
+				System.out.println("ProductDaoDataSource: PRECatalogati +" + p.getName());
+				if(!catalogati.contains(p)) {
+					catalogati.add(p);
+					System.out.println("ProductDaoDataSource: Catalogati +" + p.getName());
+					int i = 0; 
+					for(ProductBean f: products) if(f.getName().equals(currentProduct))i++;
+					System.out.println("ProductDaoDataSource: i + " +i);
+					preparedStatement.setInt(2, i);
+					preparedStatement.setString(3, currentProduct);
+					preparedStatement.setString(4, p.getCategory());
+					preparedStatement.setDouble(5, (p.getPrice()*i));
+					preparedStatement.addBatch();
+				}
+			}
+			preparedStatement.executeBatch();
+			System.out.println("ProductDaoDataSource: Batch ORdine eseguita");
+			
+			
+		}finally {
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} finally {
+				if (connection != null)
+					connection.close();
+			}
+		}
+		
 	}
+
 
 	// Restituisce per ogni categoria il prodotto con il prezzo min (LIMIT 3)
 	@Override
