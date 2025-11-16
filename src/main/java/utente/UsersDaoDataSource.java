@@ -26,10 +26,10 @@ public class UsersDaoDataSource implements IUsersDAO<User> {
 			Context initCtx = new InitialContext();
 			Context envCtx = (Context) initCtx.lookup("java:comp/env");
 
-			ds = (DataSource) envCtx.lookup("jdbc/coinverter");
+			ds = (DataSource) envCtx.lookup("jdbc/PartC");
 
 		} catch (NamingException e) {
-			System.out.println("Error:" + e.getMessage());
+			System.out.println("Error: " + e.getMessage());
 		}
 	}
 
@@ -128,9 +128,6 @@ public class UsersDaoDataSource implements IUsersDAO<User> {
 				bean.setPassword(rs.getString("pwd"));
 				bean.setEmail(rs.getString("email"));
 				bean.setAdmin(rs.getBoolean("isAdmin"));
-				preparedStatement.setString(1, bean.getEmail());
-				ResultSet rw = preparedStatement.executeQuery();
-				
 				products.add(bean);
 			}
 
@@ -192,7 +189,6 @@ public class UsersDaoDataSource implements IUsersDAO<User> {
 		User bean = new User();
 
 		String selectSQL = "SELECT * FROM " + UsersDaoDataSource.TABLE_NAME + " WHERE email = ?";
-		String walletSQL = "SELECT * FROM valuta WHERE email = ?";
 
 		try {
 			connection = ds.getConnection();
@@ -203,16 +199,12 @@ public class UsersDaoDataSource implements IUsersDAO<User> {
 			if(!rs.isBeforeFirst()) bean = null;
 			else {
 				while (rs.next()) {
-				preparedStatement = connection.prepareStatement(walletSQL);
 					
-				
 				bean.setNome(rs.getString("nome"));
 				bean.setCognome(rs.getString("cognome"));
 				bean.setEmail(rs.getString("email"));
 				bean.setPassword(rs.getString("pwd"));
 				bean.setAdmin(rs.getBoolean("isAdmin"));
-				preparedStatement.setString(1, bean.getEmail());
-				ResultSet rw = preparedStatement.executeQuery();
 				
 				}
 			}			
