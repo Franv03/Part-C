@@ -28,7 +28,7 @@ public class IndexServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-		sessione.setAttribute("products", prodotti);
+		request.setAttribute("products", prodotti);
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
 		dispatcher.forward(request, response);
     }

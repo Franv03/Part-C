@@ -9,6 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script type="text/javascript" src="JS/scripts.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
@@ -23,7 +24,7 @@
 
 			<div class="searchContainer">
 				<div class="searchInput">
-					<img id="searchIcon" src="img/icons/lens.svg" alt="">
+					<img id="searchIcon" src="img/icons/lens.svg" onclick="Ricerca()">
 					<input type="text" id="input" name="searchBox" placeholder="Search...">
 				</div>
 			</div>

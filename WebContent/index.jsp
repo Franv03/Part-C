@@ -3,7 +3,7 @@
  
 <%
 HttpSession sessione = request.getSession();
-ArrayList<ProductBean> prodotti = (ArrayList<ProductBean>)sessione.getAttribute("products");
+ArrayList<ProductBean> prodotti = (ArrayList<ProductBean>) request.getAttribute("products");
 DecimalFormat df = new DecimalFormat("#.##");
 
 if(prodotti==null || prodotti.isEmpty()){

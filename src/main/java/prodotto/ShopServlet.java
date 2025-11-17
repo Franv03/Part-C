@@ -16,25 +16,45 @@ import javax.servlet.http.HttpSession;
 public class ShopServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession sessione = request.getSession();
-        
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	HttpSession sessione = request.getSession();
+		String filtro = (String) request.getParameter("filter");
+		if(filtro== null)filtro = "";
+		String azione = (String) request.getParameter("action");
+		
+		if(azione== null)azione = "ricerca";
 		ArrayList<ProductBean> prodotti = new ArrayList<ProductBean>();
 		ProductDaoDataSource source = new ProductDaoDataSource();
 
-        try {
-            prodotti = source.doRetrieveAvailable();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+		
+		if (azione.equals("ricerca")) {
+
+			try {
+				if (filtro.length() != 0) {
+					prodotti = source.doRetrieveByName(filtro);
+				} else {
+					prodotti = source.doRetrieveAvailable();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} else if (azione.equals("categoria")) {
+			try {
+
+				if (filtro != null && filtro.length() != 0) prodotti = source.doRetrieveByCategory(filtro);
+					
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 
 		sessione.setAttribute("products1", prodotti);
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/shop.jsp");
 		dispatcher.forward(request, response);
-    }
+	}
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        doGet(request, response);
-    }
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doPost(request, response);
+	}
 }

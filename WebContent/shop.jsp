@@ -46,42 +46,42 @@ if (prodotti == null || prodotti.isEmpty()) {
   					<h2>Categorie</h2>
  					
  					<div class="categoryItem">
-            			<a class="selectionMenu" href="#">
+            			<a class="selectionMenu" href="Shop?filter=Motherboard&action=categoria">
               				<img class="categoryIcon" src="img/icons/iconMb.png" alt=""><span>Schede Madre</span>
             			</a>
           			</div>
           			 <div class="categoryItem">
-            			<a class="selectionMenu" href="#">
+            			<a class="selectionMenu" href="Shop?filter=CPU&action=categoria">
               				<img class="categoryIcon" src="img/icons/iconCPU.png" alt=""><span>Processori</span>
             			</a>
           			</div>
           			 <div class="categoryItem">
-            			<a class="selectionMenu" href="#">
+            			<a class="selectionMenu" href="Shop?filter=RAM&action=categoria">
               				<img class="categoryIcon" src="img/icons/iconRAM.png" alt=""><span>RAM</span>
             			</a>
           			</div>
           			 <div class="categoryItem">
-            			<a class="selectionMenu" href="#">
+            			<a class="selectionMenu" href="Shop?filter=GPU&action=categoria">
               				<img class="categoryIcon" src="img/icons/iconGPU.png" alt=""><span>Schede Video</span>
             			</a>
           			</div>
           			 <div class="categoryItem">
-            			<a class="selectionMenu" href="#">
+            			<a class="selectionMenu" href="Shop?filter=PSU&action=categoria">
               				<img class="categoryIcon" src="img/icons/iconPSU.png" alt=""><span>Alimentatori</span>
             			</a>
           			</div>
           			 <div class="categoryItem">
-            			<a class="selectionMenu" href="#">
+            			<a class="selectionMenu" href="Shop?filter=Storage&action=categoria">
               				<img class="categoryIcon" src="img/icons/iconSSD.png" alt=""><span>Archiviazione</span>
             			</a>
           			</div>
           			<div class="categoryItem">
-            			<a class="selectionMenu" href="#">
+            			<a class="selectionMenu" href="Shop?filter=Case&action=categoria">
               				<img class="categoryIcon" src="img/icons/iconCase.png" alt=""><span>Case</span>
             			</a>
           			</div>          			 
           			<div class="categoryItem">
-            			<a class="selectionMenu" href="#">
+            			<a class="selectionMenu" href="Shop?filter=Acc&action=categoria">
               				<img class="categoryIcon" src="img/icons/iconAcc.png" alt=""><span>Accessori</span>
             			</a>
           			</div>

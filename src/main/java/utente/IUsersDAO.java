@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface IUsersDAO<User> {
+	
 	public void doSave(User user) throws SQLException;
 
 	public boolean doDelete(String name) throws SQLException;

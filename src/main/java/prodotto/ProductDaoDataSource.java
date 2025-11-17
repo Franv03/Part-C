@@ -249,7 +249,7 @@ public class ProductDaoDataSource implements IProductDAO<ProductBean> {
 
 		ArrayList<ProductBean> beanz = new ArrayList<ProductBean>();
 
-		String selectNameSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME + " WHERE tipo = ?";
+		String selectNameSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME + " WHERE categoria = ?";
 
 		
 		try {
