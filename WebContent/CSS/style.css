@@ -3609,6 +3609,64 @@ main {
 	opacity: 0.4;
 }
 
+.row {
+  display: flex;
+  min-height: 100vh; /* non fisso, così il footer non viene “mangiato” */
+}
+
+.column {
+  width: 15%;
+  background: #538370;
+}
+
+.column2 {
+  width: 80%;
+  padding: 10px;
+}
+.category {
+  width: 100%;
+  height: 100%;
+  background-color: #538370; /* Set a width if you like */
+}
+
+.category .categoryItem {
+    position: relative;
+    cursor: pointer;
+}
+
+.category h2 {
+	text-align: center;
+	font-weight: 700;
+	color: #CE8946;
+	background-color: #324f44;
+	margin: 0;
+	padding: 10px;
+}
+
+.category .categoryItem a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    padding: 5px 30px;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 60px;
+}
+
+.category .selectionMenu:hover {
+    border-left: solid 5px;
+    border-color: #CE8946;
+    background-color: #629c85;
+}
+
+.categoryItem .categoryIcon {
+    width: 38px;
+    height: 38px;
+    margin-right: 15px;
+    vertical-align: middle;
+}
+
+
 .homeShop {
 	min-height: 500px;
 	padding: 100px;
@@ -3621,10 +3679,26 @@ main {
 	justify-content: center;
 }
 
+.Shop {
+	min-height: 500px;
+	padding-top: 50px
+}
+
+.ShopRow {
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+	justify-content: center;
+}
+
 .productContainer {
 	flex: 0 0 auto;
 	padding: 10px;
 	width: 100%;
+}
+
+#shopProduct {
+		padding: 20px;
 }
 
 .productContainer .productItem {
@@ -3694,16 +3768,19 @@ main {
 	z-index: -1;
 	border-radius: 10px;
 	transition: 0.3s all ease;
+	
 }
 
 .productContainer .productItem:hover .productImg {
 	top: -25px;
+
 }
 
 .productContainer .productItem:hover .crossIcon {
 	bottom: 0;
 	opacity: 1;
 	visibility: visible;
+
 }
 
 .productContainer .productItem:hover:before {
@@ -4002,6 +4079,30 @@ footer .navbar .NavbarSub li .navLinkFooter:before {
 	transition: 0.15s all ease-out;
 }
 
+@media ( max-width : 1440px) {
+	
+	.column {
+		width: 20%;
+	}
+	
+}
+
+@media ( max-width : 1120px) {
+	.category h2{
+		 font-size: 16px;
+	}
+	
+	.category .categoryItem span {
+		display: none;
+	}
+	
+	.category .categoryItem a {
+		text-align: center;
+	}
+	
+	
+}
+
 @media ( max-width : 995px) {
 	.searchContainer {
 		width: 25%;
@@ -4034,6 +4135,13 @@ footer .navbar .NavbarSub li .navLinkFooter:before {
 		font-size: 30px;
 	}
 }
+
+@media ( max-width : 600px) {
+		.column {
+		width: 21%;
+	}
+}
+
 
 @media ( min-width : 721px) {
 	.hero {
