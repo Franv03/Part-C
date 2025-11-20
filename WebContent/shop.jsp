@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"
-	import="java.util.ArrayList,prodotto.ProductBean,java.text.DecimalFormat"%>
-<!-- CARRELLO!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+	import="java.util.ArrayList,prodotto.ProductBean,java.text.DecimalFormat,acquisto.Cart"%>
 
 <%
 HttpSession sessione = request.getSession();
@@ -12,6 +11,9 @@ if (prodotti == null || prodotti.isEmpty()) {
 	response.sendRedirect(request.getContextPath() + "/Shop");
 	return;
 }
+
+Cart carrello =(Cart) sessione.getAttribute("cart");
+int v = -1;
 //ArrayList<ProductBean> prodotti = new ArrayList();
 %>
 
@@ -117,20 +119,27 @@ if (prodotti == null || prodotti.isEmpty()) {
 					</div>
 			</div>
 		</div>
-		<div class="popup-overlay" id="popupOverlay">
-			<div class="popup" id="popup">
-				<a class="close" id="closePopup" onclick="closePopupFunc()">x</a>
-				<div class="popup-content">
-					<p>inserisci quantita':</p>
-					<div class="wau">
-						<input type="number" placeholder="quantita'" id="inputQty" min="1">
+			<div class="popup-overlay" id="popupOverlay">
+				<div class="popup" id="popup">
+					<a class="close" id="closePopup" onclick="closePopupFunc()">x</a>
+					<div class="popup-content">
+						<p>inserisci quantita':</p>
+						<div class="wau">
+							<input type="number" placeholder="quantita'" id="inputQty" min="1">
+						</div>
+						<a class="addcart" onclick="modificaCarrello('add')">Aggiungi al carrello</a>
 					</div>
-					<a class="addcart">Aggiungi al carrello</a>
 				</div>
 			</div>
-		</div>
 		</section>
 	</main>
+	
+	<!--Jquery-->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js">
+	</script>
+
+	
 	<jsp:include page='footer.html'>
 		<jsp:param name="PageTitle" value="index" />
 	</jsp:include>

@@ -1,10 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="utente.User,prodotto.ProductBean"%> <!-- CARRELLO!!!!!!!!!!!!!!!!!!!!!!!!!!! -->  
+    pageEncoding="UTF-8" import="utente.User,prodotto.ProductBean, acquisto.Cart"%>
  
 <%
 	User user = (User)session.getAttribute("user");
 	//User user = new User();
 	//user.setAdmin(false);
+	
+	Cart cart = (Cart)request.getSession().getAttribute("cart");
+	if(cart == null){
+		cart = new Cart();
+		request.getSession().setAttribute("cart",cart); 		
+	}
 %>
 <!DOCTYPE html>
 <html>
@@ -43,7 +49,10 @@
 						<li><a class="navIconLink" href="Logout"><img class="navIcon" src="img/icons/userLog.png"></a></li>
 						<li><a class="navIconLink" href="#"><img class="navIcon" src="img/icons/admin.svg"></a></li>
 					<%}%>
-					<li><a class="navIconLink" href="cart.html"><img class="navIcon" src="img/icons/cart.svg"></a></li>
+						<div class="kamehameha">
+							<span class="badge" id="contatoreCarrello"><%=cart.getCount()%></span>
+							<li><a class="navIconLink" href="cart.html"><img class="navIcon" src="img/icons/cart.svg"></a></li>
+						</div>
 				</ul>
 			</div>
 		</div>

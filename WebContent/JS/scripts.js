@@ -1,6 +1,70 @@
+var ID_Product
+
+function Ricerca() {
+	let filtro;
+	filtro = document.getElementById("input").value;
+
+	if (filtro == null) filtro = "";
+	var currentURL = window.location.href;
+	window.location.href = currentURL.substring(0, currentURL.lastIndexOf('/') + 1) + 'Shop?filter=' + filtro.toLowerCase() + '&action=ricerca'
+
+}
+
+function consoleText(words, id, colors) {
+	if (colors === undefined) colors = ['#fff'];
+	var visible = true;
+	var con = document.getElementById('console');
+	var letterCount = 1;
+	var x = 1;
+	var waiting = false;
+	var target = document.getElementById(id)
+	target.setAttribute('style', 'color:' + colors[0])
+
+	window.setInterval(function() {
+		if (letterCount === 0 && waiting === false) {
+			waiting = true;
+			target.innerHTML = words[0].substring(0, letterCount)
+
+			window.setTimeout(function() {
+				var usedColor = colors.shift();
+				colors.push(usedColor);
+				var usedWord = words.shift();
+				words.push(usedWord);
+				x = 1;
+				target.setAttribute('style', 'color:' + colors[0])
+				letterCount += x;
+				waiting = false;
+			}, 1000)
+
+		} else if (letterCount === words[0].length + 1 && waiting === false) {
+			waiting = true;
+			window.setTimeout(function() {
+				x = -1;
+				letterCount += x;
+				waiting = false;
+			}, 1000)
+
+		} else if (waiting === false) {
+			target.innerHTML = words[0].substring(0, letterCount)
+			letterCount += x;
+		}
+	}, 120)
+
+	window.setInterval(function() {
+		if (visible === true) {
+			con.className = 'console-underscore hidden'
+			visible = false;
+
+		} else {
+			con.className = 'console-underscore'
+			visible = true;
+		}
+	}, 400)
+}
+
 function openPopup(id) {
-	OmegaPezza = id;
-	console.log(OmegaPezza);
+	ID_Product = id;
+	console.log(ID_Product);
 	const popupOverlay = document.getElementById('popupOverlay');
 	popupOverlay.style.display = 'block';
 }
@@ -10,12 +74,27 @@ function closePopupFunc() {
 	popupOverlay.style.display = 'none';
 }
 
-function Ricerca() {
-	let filtro;
-	filtro = document.getElementById("input").value;
+function modificaCarrello(azione) {
+	const qty = document.getElementById('inputQty').value;
+	var c = ID_Product;
 
-	if (filtro == null)	filtro = "";
-	var currentURL = window.location.href;
-	window.location.href = currentURL.substring(0, currentURL.lastIndexOf('/') + 1) + 'Shop?filter=' + filtro.toLowerCase() + '&action=ricerca'
+	var xhr = new XMLHttpRequest();
 
+	var finalString = "CartServlet?id=" + c + "&action=" + azione + "&quantity=" + qty;
+	console.log(finalString);
+
+	xhr.open("GET", finalString, true);
+
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4 && xhr.status === 200) {
+			console.log("Oggetto aggiunto con successo al carrello!");
+			var numeroElementi = xhr.responseText;
+			console.log("elementi =" + numeroElementi);
+			document.getElementById("contatoreCarrello").innerHTML = numeroElementi;
+		}
+	};
+
+	xhr.send();
+
+	closePopupFunc();
 }

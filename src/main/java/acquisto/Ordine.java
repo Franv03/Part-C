@@ -57,7 +57,7 @@ public class Ordine {
 		this.nome_prodotto = nome_prodotto;
 	}
 
-	public void setTipo_prodotto(String categoria_prodotto) {
+	public void setCategoria_prodotto(String categoria_prodotto) {
 		this.categoria_prodotto = categoria_prodotto;
 	}
 

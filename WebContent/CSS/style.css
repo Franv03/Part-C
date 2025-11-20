@@ -3378,6 +3378,84 @@ a.more {
 	margin-right: 20px;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 html {
 	height: auto;
 }
@@ -3524,9 +3602,34 @@ main {
 .navbar .NavbarSub li a {
 	font-weight: 500;
 	color: #fff !important;
-	opacity: 0.5;
 	transition: 0.3s all ease;
 	position: relative;
+	opacity: 0.5;
+}
+
+.kamehameha {
+	position: relative;
+	width: auto;
+	height: auto;
+	margin: 0;
+	padding: 0;
+}
+
+.kamehameha .badge{
+    position: absolute;
+    top: 0px;
+    right: 5px;
+    bottom: 60%;
+    background-color: red;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 12px;
+    padding: 0px 5px;
+    z-index: 1;
+    color: #fff;
 }
 
 .navbar .NavbarSub li .navLink:before, .navbar .NavbarSub li .navIconLink:before,
@@ -3548,17 +3651,22 @@ main {
 	opacity: 1;
 }
 
+.navbar .NavbarSub .navIconLink:hover {
+		opacity: 1;
+} 
+
 .navbar .NavbarSub li a:hover:before {
 	width: calc(100% - 16px);
 }
 
-.navbar .NavbarSub li.active a {
+.navbar .NavbarSub li a:hover {
 	opacity: 1;
 }
 
 .navbar .NavbarSub li.active a:before {
 	width: calc(100% - 16px);
 }
+
 
 /* Hero -------------------------------------------------------------------------*/
 .hero {
@@ -4119,15 +4227,19 @@ footer .navbar .NavbarSub li .navLinkFooter:before {
 		margin-top: 10px;
 		width: 100%;
 	}
+	
 	.NavbarSub {
 		padding-top: 10px;
 	}
+	
 	.divider span {
 		font-size: 18px;
 	}
+	
 	#footerPosition {
 		padding-top: 22px;
 	}
+	
 	.hero h1 {
 		text-align: center;
 		padding: 10px 0px;
@@ -4137,7 +4249,7 @@ footer .navbar .NavbarSub li .navLinkFooter:before {
 }
 
 @media ( max-width : 600px) {
-		.column {
+	.column {
 		width: 21%;
 	}
 }
@@ -4163,15 +4275,22 @@ footer .navbar .NavbarSub li .navLinkFooter:before {
 
 @media ( min-width : 995px) {
 	.navbar .NavbarSub li {
-		margin-left: 15px;
-		margin-right: 15px;
+		margin-left: 10px;
+		margin-right: 10px;
 	}
+	
+	.kamehameha .badge {
+    	right: 15px;
+	}
+	
 	.hero h1 {
 		font-size: 35px;
 	}
+	
 	.productContainer {
 		width: 25%;
 	}
+	
 	.searchContainer {
 		width: 30%;
 	}

@@ -66,19 +66,18 @@ if(prodotti==null || prodotti.isEmpty()){
 				</div>
 			<%}}%>
 			</div>
-				<div class="popup-overlay" id="popupOverlay">
-					<div class="popup" id="popup">
-						<a class="close" id="closePopup" onclick="closePopupFunc()">x</a>
-						<div class="popup-content">
-							<p>inserisci quantita':</p>
-							<div class="wau">
-								<input type="number" placeholder="quantita'" id="inputQty"
-									min="1">
-							</div>
-							<a class="addcart">Aggiungi al carrello</a>
+			<div class="popup-overlay" id="popupOverlay">
+				<div class="popup" id="popup">
+					<a class="close" id="closePopup" onclick="closePopupFunc()">x</a>
+					<div class="popup-content">
+						<p>inserisci quantita':</p>
+						<div class="wau">
+							<input type="number" placeholder="quantita'" id="inputQty" min="1">
 						</div>
+						<a class="addcart" onclick="modificaCarrello('add')">Aggiungi al carrello</a>
 					</div>
 				</div>
+			</div>
 		</section>
 	</main>
 	<jsp:include page='footer.html'>
