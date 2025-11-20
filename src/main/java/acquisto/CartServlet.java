@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,12 +26,12 @@ public class CartServlet extends HttpServlet {
 		int prodottoid = Integer.parseInt(request.getParameter("id"));
 		
 		String azione = request.getParameter("action");
-		
 		Cart c = (Cart) sessione.getAttribute("cart");
 		ProductDaoDataSource source = new ProductDaoDataSource();
-		
+		int quantita = Integer.parseInt(request.getParameter("quantity"));
 		
 		ProductBean prodotto = null;
+		
 		try {
 			prodotto = source.doRetrieveByKey(prodottoid);
 		} catch (SQLException e) {
@@ -41,14 +40,15 @@ public class CartServlet extends HttpServlet {
 		}
 			
 			if(azione != null && azione.equals("add") && prodotto != null) {
-				c.addProduct(prodotto);
+				
+				c.addProduct(prodotto,quantita);
 				
 			}
 			else if(azione != null && azione.equals("remove")) {
-				c.deleteProduct(prodotto);
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/cart.jsp");
-				dispatcher.forward(request, response);
+				c.deleteProduct(prodotto,quantita);
+				response.sendRedirect("cart.jsp");
 			}
+			
 			sessione.setAttribute("cart", c);
 			 PrintWriter out = response.getWriter();
 		        response.setContentType("text/plain");
@@ -57,9 +57,6 @@ public class CartServlet extends HttpServlet {
 		        out.flush();
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doPost(request, response);

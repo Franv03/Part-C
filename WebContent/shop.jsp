@@ -11,9 +11,9 @@ if (prodotti == null || prodotti.isEmpty()) {
 	response.sendRedirect(request.getContextPath() + "/Shop");
 	return;
 }
-
+/*
 Cart carrello =(Cart) sessione.getAttribute("cart");
-int v = -1;
+int v = -1;*/
 //ArrayList<ProductBean> prodotti = new ArrayList();
 %>
 

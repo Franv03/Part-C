@@ -51,7 +51,7 @@
 					<%}%>
 						<div class="kamehameha">
 							<span class="badge" id="contatoreCarrello"><%=cart.getCount()%></span>
-							<li><a class="navIconLink" href="cart.html"><img class="navIcon" src="img/icons/cart.svg"></a></li>
+							<li><a class="navIconLink" href="cart.jsp"><img class="navIcon" src="img/icons/cart.svg"></a></li>
 						</div>
 				</ul>
 			</div>

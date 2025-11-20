@@ -22,13 +22,13 @@ public class ProductDaoDataSource implements IProductDAO<ProductBean> {
 	private static DataSource ds;
 
 	// Query
-	private String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE codice = ?";
+	private String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE ID_Prodotto = ?";
 	private String selectAllSQL = "SELECT * FROM " + TABLE_NAME;
-	private String deleteSQL = "UPDATE " + TABLE_NAME + " SET disponibile = false WHERE codice = ?";
+	private String deleteSQL = "UPDATE " + TABLE_NAME + " SET disponibile = false WHERE ID_Prodotto = ?";
 	private String insertSQL = "INSERT INTO " + TABLE_NAME
 			+ " (nome, prezzo, quantita, categoria, foto, disponibile) VALUES (?, ?, ?, ?, ?, ?)";
 	private String updateSQL = "UPDATE " + TABLE_NAME
-			+ " SET nome=?, prezzo=?, quantita=?, categoria=?, foto=?, disponibile=? WHERE codice=?";
+			+ " SET nome=?, prezzo=?, quantita=?, categoria=?, foto=?, disponibile=? WHERE ID_Prodotto=?";
 
 	static {
 		try {
@@ -158,16 +158,15 @@ public class ProductDaoDataSource implements IProductDAO<ProductBean> {
 		return (result != 0);
 	}
 
-	// Cerca prodotto per codice
+
 	@Override
-	public ProductBean doRetrieveByKey(int code) throws SQLException {
+	public synchronized ProductBean doRetrieveByKey(int code) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
-		ProductBean bean = new ProductBean();
+		ProductBean bean = null;
 
-		// String selectSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME + "
-		// WHERE ID_prodotto = ?";
+		//String selectSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME + " WHERE ID_prodotto = ?";
 
 		try {
 			connection = ds.getConnection();
@@ -175,15 +174,17 @@ public class ProductDaoDataSource implements IProductDAO<ProductBean> {
 			preparedStatement.setInt(1, code);
 
 			ResultSet rs = preparedStatement.executeQuery();
-
-			while (rs.next()) {
-				bean.setCode(rs.getInt("ID_prodotto"));
-				bean.setName(rs.getString("nome"));
-				bean.setCategory(rs.getString("categoria"));
-				bean.setPhoto(rs.getString("foto"));
-				bean.setPrice((float) rs.getDouble("prezzo"));
-
-			}
+			
+			if(rs.isBeforeFirst()) {
+				bean = new ProductBean();
+				while (rs.next()) {
+					bean.setCode(rs.getInt("ID_prodotto"));
+					bean.setName(rs.getString("nome"));
+					bean.setCategory(rs.getString("categoria"));
+					bean.setPhoto(rs.getString("foto"));
+					bean.setPrice((float)rs.getDouble("prezzo"));
+				}
+			}else throw new SQLException();
 
 		} finally {
 			try {
@@ -195,7 +196,6 @@ public class ProductDaoDataSource implements IProductDAO<ProductBean> {
 			}
 		}
 		return bean;
-
 	}
 
 	// Cerca prodotto per nome
@@ -283,7 +283,6 @@ public class ProductDaoDataSource implements IProductDAO<ProductBean> {
 	}
 
 
-	// Prodotti disponibili
 	@Override
 	public synchronized ArrayList<ProductBean> doRetrieveAvailable() throws SQLException {
 		Connection connection = null;
@@ -294,21 +293,22 @@ public class ProductDaoDataSource implements IProductDAO<ProductBean> {
 		String selectSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME + " WHERE disponibile = TRUE";
 		connection = ds.getConnection();
 		try {
-
+		
+		
 			preparedStatement = connection.prepareStatement(selectSQL);
 
 			ResultSet rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
 				ProductBean bean = new ProductBean();
-
-				bean.setQuantity(rs.getInt("quantita"));
+				
+				bean.setCode(rs.getInt("ID_prodotto"));
 				bean.setCategory(rs.getString("categoria"));
 				bean.setName(rs.getString("nome"));
 				bean.setPrice(rs.getFloat("prezzo"));
 				bean.setPhoto(rs.getString("foto"));
 				bean.setAvailable(rs.getBoolean("disponibile"));
-
+				
 				products.add(bean);
 			}
 
@@ -323,6 +323,7 @@ public class ProductDaoDataSource implements IProductDAO<ProductBean> {
 		}
 		return products;
 	}
+
 
 	// Tutti i prodotti
 	@Override

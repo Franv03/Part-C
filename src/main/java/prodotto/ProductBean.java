@@ -20,6 +20,16 @@ public class ProductBean implements Serializable{
 		this.available = true;
 	}
 	
+	public ProductBean(int code, String name, double price, String category) {
+		this.code = code;
+		this.name = name;
+		this.price = price;
+		this.quantity = 1;
+		this.setCategory(category);
+		this.photo = null;
+		this.available = true;
+	}
+	
 	public int getCode() {
 		return this.code;
 	}
@@ -82,7 +92,7 @@ public class ProductBean implements Serializable{
 	public String toString() {
 		return getClass().getName() +
 				"[" +
-				"codice = " + code + ", nome = " + name + ", prezzo = " + price + ", quantita = " + quantity +", categoria = " + category + ", foto = " + photo + ", disponibile = " + available +
+				"ID_Prodotto = " + code + ", nome = " + name + ", prezzo = " + price + ", quantita = " + quantity +", categoria = " + category + ", foto = " + photo + ", disponibile = " + available +
 				"]";
 	}
 	
