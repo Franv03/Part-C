@@ -1,0 +1,85 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" import="java.util.ArrayList,prodotto.ProductBean"%>
+
+
+<%
+	HttpSession sessione = request.getSession();
+	ArrayList<ProductBean> prodotti = (ArrayList<ProductBean>)sessione.getAttribute("prd");
+	
+
+	if(prodotti==null || prodotti.isEmpty()){
+		response.sendRedirect(request.getContextPath()+"/ProdottiAD");
+		return;
+	}
+%>
+<!doctype html>
+<html lang="it">
+
+<head>
+<meta charset="utf-8">
+<script type="text/javascript" src="JS/scripts.js"></script>
+<link href="CSS/style.css" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="img/logo/logo.svg">
+<title>Amministrazione</title>
+<header class="navbar">
+	<div class="navContainer">
+		<div class="centerPosition">
+			<a href="index.jsp"> <img class="logo" src="img/logo/logo.svg">
+			</a> <a class="navBrand" href="index.jsp">P<span>art-</span>C
+			</a>
+		</div>
+
+		<div class="centerPosition">
+			<ul class="NavbarSub">
+				<li><a class="navLink" href="admin.html">Gestione Prodotti</a></li>
+				<li><a class="navLink" href="gestioneProfili.jsp">Gestione Profili</a></li>
+				<li><a class="navLink" href="delivery.html">Gestione Acquisti</a></li>
+				<li><a class="navIconLink" href="Logout"><img
+						class="navIcon" src="img/icons/userLog.png"></a></li>
+			</ul>
+		</div>
+	</div>
+</header>
+</head>
+
+<body onload="consoleText(['Hi, Admin.', 'Choose what you want to do'], 'text', ['tomato', 'rebeccapurple'])" onresize="brutta()">
+   <jsp:include page='adminHeader.jsp'></jsp:include>
+ 
+  <main class="bgPage">
+    <div class="bg">
+      <section>
+        <div class="container">
+            <!-- items -->
+			<%for(ProductBean p : prodotti){%>
+            <div class="itemContainer">
+              <div class="cart-item">
+                <div class="row">
+                  <div class="imgContainer center-item">
+                    <img id="pImg" src="img/icon/iconUser.png" alt="">
+                  </div>
+                  
+                  <h5><%=p.getCode()%></h5><h5><%=p.getName()%></h5><h5><%=p.getQuantity()%></h5><h5><%=p.getPrice()%></h5><h5><%=p.getType()%></h5>
+                  <div class="last">
+                  <div class="dataContainer center-item">
+                  	<div class="modifyBtn">
+                  		<a href="Gestione?id=<%=p.getCode()%>"><img src="img/icon/iconModify.png" alt="" class="remove-item"></a>
+                  	</div>
+                  	<div class="modifyBtn">
+                  		<a href=""><img src="img/icon/iconTrash.png" alt="" class="remove-item"></a>
+                  	</div>
+                  </div>
+                 </div>
+                </div>
+              </div>
+            </div>
+			 <% }%>
+          </div>
+      </section>
+    </div>
+    <script src="app.js"></script>
+  </main>
+</body>
+
+
+
+</html>

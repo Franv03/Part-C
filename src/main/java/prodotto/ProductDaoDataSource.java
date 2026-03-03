@@ -45,157 +45,120 @@ public class ProductDaoDataSource implements IProductDAO<ProductBean> {
 	// Aggiunta prodotto
 	@Override
 	public void doSave(ProductBean product) throws SQLException {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
 
-		String insertNewSQL = "INSERT INTO " + ProductDaoDataSource.TABLE_NAME
-				+ " (nome, prezzo, quantita, categoria, foto) VALUES (?, ?, ?, ?, ?)";
-		try {
-			connection = ds.getConnection();
-			preparedStatement = connection.prepareStatement(insertNewSQL);
-			preparedStatement.setString(1, product.getName());
-			preparedStatement.setDouble(2, product.getPrice());
-			preparedStatement.setInt(3, product.getQuantity());
-			preparedStatement.setString(4, product.getCategory());
-			preparedStatement.setString(5, product.getPhoto());
-			preparedStatement.executeUpdate();
-		} finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} finally {
-				if (connection != null)
-					connection.close();
-			}
-		}
+	    Connection connection = null;
+	    PreparedStatement preparedStatement = null;
+
+	    String insertSQL = "INSERT INTO " + TABLE_NAME +
+	            " (nome, prezzo, quantita, categoria, foto, disponibile) " +
+	            "VALUES (?, ?, ?, ?, ?, ?)";
+
+	    try {
+	        connection = ds.getConnection();
+	        preparedStatement = connection.prepareStatement(insertSQL);
+
+	        preparedStatement.setString(1, product.getName());
+	        preparedStatement.setDouble(2, product.getPrice());
+	        preparedStatement.setInt(3, product.getQuantity());
+	        preparedStatement.setString(4, product.getCategory());
+	        preparedStatement.setString(5, product.getPhoto()); // sarà null va bene
+	        preparedStatement.setBoolean(6, product.isAvailable());
+
+	        preparedStatement.executeUpdate();
+
+	        System.out.println("PRODOTTO INSERITO CORRETTAMENTE");
+
+	    } finally {
+	        if (preparedStatement != null) preparedStatement.close();
+	        if (connection != null) connection.close();
+	    }
 	}
 
 	// Aggiorna prodotto
 	@Override
 	public void doUpdate(ProductBean product) throws SQLException {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
+	    Connection connection = null;
+	    PreparedStatement preparedStatement = null;
 
-		ProductBean oldBean = new ProductBean();
+	    String updateSQL = "UPDATE " + TABLE_NAME +
+	            " SET nome = ?, prezzo = ?, quantita = ?, categoria = ?, foto = ?, disponibile = ? " +
+	            "WHERE ID_Prodotto = ?";
 
-		String updateSQL = "UPDATE " + ProductDaoDataSource.TABLE_NAME
-				+ " SET nome = ?,quantita = ?, categoria = ?, prezzo = ?, foto = ?";
+	    try {
+	        connection = ds.getConnection();
+	        preparedStatement = connection.prepareStatement(updateSQL);
 
-		try {
-			connection = ds.getConnection();
-			preparedStatement = connection.prepareStatement(selectSQL);
-			preparedStatement.setInt(1, product.getCode());
+	        // Imposto i valori dal bean
+	        preparedStatement.setString(1, product.getName() != null ? product.getName() : "");
+	        preparedStatement.setDouble(2, product.getPrice());
+	        preparedStatement.setInt(3, product.getQuantity());
+	        preparedStatement.setString(4, product.getCategory() != null ? product.getCategory() : "");
+	        preparedStatement.setString(5, product.getPhoto() != null ? product.getPhoto() : "");
+	        preparedStatement.setBoolean(6, product.isAvailable());
+	        preparedStatement.setInt(7, product.getCode());
 
-			ResultSet rs = preparedStatement.executeQuery();
+	        preparedStatement.executeUpdate();
 
-			while (rs.next()) {
-				oldBean.setCode(rs.getInt("ID_prodotto"));
-				oldBean.setName(rs.getString("nome"));
-				oldBean.setCategory(rs.getString("categoria"));
-				oldBean.setPhoto(rs.getString("foto"));
-				oldBean.setPrice((float) rs.getDouble("prezzo"));
-
-				preparedStatement = connection.prepareStatement(updateSQL);
-				if (product.getName() == null) {
-					preparedStatement.setString(1, oldBean.getName());
-				} else
-					preparedStatement.setString(1, product.getName());
-
-				if (product.getCategory() == null) {
-					preparedStatement.setString(1, oldBean.getCategory());
-				} else
-					preparedStatement.setString(1, product.getCategory());
-
-				if (product.getPrice() < 0) {
-					preparedStatement.setDouble(1, oldBean.getPrice());
-				} else
-					preparedStatement.setDouble(1, product.getPrice());
-
-				if (product.getPhoto() == null) {
-					preparedStatement.setString(1, oldBean.getPhoto());
-				} else
-					preparedStatement.setString(1, product.getPhoto());
-			}
-
-		} finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} finally {
-				if (connection != null)
-					connection.close();
-			}
-		}
+	    } finally {
+	        if (preparedStatement != null) preparedStatement.close();
+	        if (connection != null) connection.close();
+	    }
 	}
 
 	// Rimozione prodotto
 	@Override
 	public boolean doRemove(int code) throws SQLException {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
+	    Connection connection = null;
+	    PreparedStatement preparedStatement = null;
 
-		int result = 0;
+	    int result = 0;
+	    String deleteSQL = "DELETE FROM " + ProductDaoDataSource.TABLE_NAME + " WHERE ID_prodotto = ?";
 
-		String deleteSQL = "UPDATE " + ProductDaoDataSource.TABLE_NAME
-				+ " SET disponibile = 'false' WHERE ID_prodotto = ?";
+	    try {
+	        connection = ds.getConnection();
+	        preparedStatement = connection.prepareStatement(deleteSQL);
+	        preparedStatement.setInt(1, code);
 
-		try {
-			connection = ds.getConnection();
-			preparedStatement = connection.prepareStatement(deleteSQL);
-			preparedStatement.setInt(1, code);
+	        result = preparedStatement.executeUpdate();
 
-			result = preparedStatement.executeUpdate();
-
-		} finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} finally {
-				if (connection != null)
-					connection.close();
-			}
-		}
-		return (result != 0);
+	    } finally {
+	        if (preparedStatement != null) preparedStatement.close();
+	        if (connection != null) connection.close();
+	    }
+	    return (result != 0);
 	}
 
 
 	@Override
 	public synchronized ProductBean doRetrieveByKey(int code) throws SQLException {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
+	    Connection connection = null;
+	    PreparedStatement preparedStatement = null;
 
-		ProductBean bean = null;
+	    ProductBean bean = null;
 
-		//String selectSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME + " WHERE ID_prodotto = ?";
+	    try {
+	        connection = ds.getConnection();
+	        preparedStatement = connection.prepareStatement(selectSQL);
+	        preparedStatement.setInt(1, code);
 
-		try {
-			connection = ds.getConnection();
-			preparedStatement = connection.prepareStatement(selectSQL);
-			preparedStatement.setInt(1, code);
+	        ResultSet rs = preparedStatement.executeQuery();
 
-			ResultSet rs = preparedStatement.executeQuery();
-			
-			if(rs.isBeforeFirst()) {
-				bean = new ProductBean();
-				while (rs.next()) {
-					bean.setCode(rs.getInt("ID_prodotto"));
-					bean.setName(rs.getString("nome"));
-					bean.setCategory(rs.getString("categoria"));
-					bean.setPhoto(rs.getString("foto"));
-					bean.setPrice((float)rs.getDouble("prezzo"));
-				}
-			}else throw new SQLException();
+	        if (rs.next()) {  // non serve isBeforeFirst
+	            bean = new ProductBean();
+	            bean.setCode(rs.getInt("ID_prodotto"));
+	            bean.setName(rs.getString("nome"));
+	            bean.setCategory(rs.getString("categoria"));
+	            bean.setPhoto(rs.getString("foto"));
+	            bean.setPrice((float) rs.getDouble("prezzo"));
+	            bean.setQuantity(rs.getInt("quantita"));  // <-- aggiunto
+	            bean.setAvailable(rs.getBoolean("disponibile")); // se vuoi
+	        }
 
-		} finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} finally {
-				if (connection != null)
-					connection.close();
-			}
-		}
-		return bean;
+	    } finally {
+	        if (preparedStatement != null) preparedStatement.close();
+	        if (connection != null) connection.close();
+	    }
+	    return bean;
 	}
 
 	// Cerca prodotto per nome
@@ -349,16 +312,17 @@ public class ProductDaoDataSource implements IProductDAO<ProductBean> {
 			ResultSet rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
-				ProductBean bean = new ProductBean();
+			    ProductBean bean = new ProductBean();
 
-				
-				bean.setCategory(rs.getString("categoria"));
-				bean.setName(rs.getString("nome"));
-				bean.setPrice(rs.getFloat("prezzo"));
-				bean.setPhoto(rs.getString("foto"));
-				bean.setAvailable(rs.getBoolean("disponibile"));
-				
-				products.add(bean);
+			    bean.setCode(rs.getInt("ID_prodotto"));      // <-- AGGIUNGI QUESTO
+			    bean.setName(rs.getString("nome"));
+			    bean.setCategory(rs.getString("categoria"));
+			    bean.setPrice(rs.getFloat("prezzo"));
+			    bean.setQuantity(rs.getInt("quantita"));    // <-- AGGIUNGI QUESTO
+			    bean.setPhoto(rs.getString("foto"));
+			    bean.setAvailable(rs.getBoolean("disponibile"));
+
+			    products.add(bean);
 			}
 
 		} finally {

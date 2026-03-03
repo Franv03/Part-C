@@ -1,18 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.ArrayList,prodotto.ProductBean,java.text.DecimalFormat"%> <!-- CARRELLO!!!!!!!!!!!!!!!!!!!!!!!!!!! -->  
+    pageEncoding="UTF-8" import="java.util.ArrayList,prodotto.ProductBean,prodotto.ProductDaoDataSource,java.text.DecimalFormat"%> <!-- CARRELLO!!!!!!!!!!!!!!!!!!!!!!!!!!! -->  
  
 <%
-HttpSession sessione = request.getSession();
-ArrayList<ProductBean> prodotti = (ArrayList<ProductBean>) request.getAttribute("products");
 DecimalFormat df = new DecimalFormat("#.##");
+ArrayList<ProductBean> prodotti = new ArrayList<>();
 
-if(prodotti==null || prodotti.isEmpty()){
-	response.sendRedirect(request.getContextPath()+"/Index");
-	return;
+try {
+    ProductDaoDataSource dao = new ProductDaoDataSource();
+    prodotti = dao.doRetrieveAvailable();
+
+    // Ordina per prezzo crescente
+    prodotti.sort((p1, p2) -> Double.compare(p1.getPrice(), p2.getPrice()));
+
+    // Prendi solo i primi 3 prodotti
+    if(prodotti.size() > 3) {
+        prodotti = new ArrayList<>(prodotti.subList(0, 3));
+    }
+} catch(Exception e) {
+    e.printStackTrace();
+    prodotti = new ArrayList<>();
 }
-//ArrayList<ProductBean> prodotti = new ArrayList(); 
 %>
-
 
 <!doctype html>
 <html lang="it">

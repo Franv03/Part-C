@@ -579,6 +579,14 @@ main {
 	margin-left: auto;
 }
 
+.adminContainer {
+	width: 100%;
+	padding: 0px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+
 .ItemRow {
 	display: flex;
 	flex-wrap: wrap;
@@ -624,10 +632,18 @@ main {
 	height: 50px;
 }
 
-.itemName {
-	width: 40%;
+#pImg3{
+	width: 50px;
+	height: 50px;
 }
 
+.itemName {
+	width: 35%;
+}
+
+.itemImage{
+	width: 35%;
+}
 #Qty {
 	margin-right: 25px;
 }
@@ -666,7 +682,7 @@ main {
 }
 
 .cart-item h5 {
-	padding: 0 3%;
+	padding: 0 2%;
 	align-content: center;
 	margin: 0px;
 }
@@ -684,6 +700,7 @@ main {
 .cart-item .removeItem {
 	width: 25px;
 	height: 25px;
+	margin-left:5px
 }
 
 .status {
@@ -998,7 +1015,10 @@ footer .navbar .NavbarSub li .navLinkFooter:before {
 	}
 	
 	.itemName {
-		width: 20%;
+		width: 15%;
+	}
+	.itemImage{
+		width: 15%;
 	}
 }
 
@@ -1034,6 +1054,9 @@ footer .navbar .NavbarSub li .navLinkFooter:before {
 	}
 	
 	.itemName {
-		width: 15%;
+		width: 10%;
+	}
+	.itemImage{
+		width: 10%;
 	}
 }

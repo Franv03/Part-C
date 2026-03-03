@@ -47,7 +47,7 @@
 						
 					<%}else if(user != null && user.isAdmin()){%>
 						<li><a class="navIconLink" href="Logout"><img class="navIcon" src="img/icons/userLog.png"></a></li>
-						<li><a class="navIconLink" href="#"><img class="navIcon" src="img/icons/admin.svg"></a></li>
+						<li><a class="navIconLink" href="Admin"><img class="navIcon" src="img/icons/admin.svg"></a></li>
 					<%}%>
 						<div class="kamehameha">
 							<span class="badge" id="contatoreCarrello"><%=cart.getCount()%></span>
