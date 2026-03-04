@@ -1,87 +1,114 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.util.ArrayList,utente.User"%>
 
-
 <%
-	HttpSession sessione = request.getSession();
-	ArrayList<User> prodotti = (ArrayList<User>)sessione.getAttribute("acc");
-	
-	if(session.getAttribute("REFRESH")!=null){
-	    response.sendRedirect("../your_servlet");
-	}
-	else{    
-	session.setAttribute("REFRESH","TRUE");
-	}
-	
-	if(prodotti==null || prodotti.isEmpty()){
-		response.sendRedirect(request.getContextPath()+"/GestioneACC");
-		return;
-	}
-	
+ArrayList<User> utenti =
+(ArrayList<User>) request.getAttribute("utenti");
 %>
 
-
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="it">
 <head>
-<link rel="shortcut icon" type="image/gif" href="img/logo.png">
-  <meta charset="utf-8">
-  <meta name="viewport" content="initial-scale = 1, width = device-width">
-  <link id="mystylesheet" rel="stylesheet" type="text/css" href="CSS/light.css">
-  <script src="JS/scripts.js"></script>
-
-<title>Part-C</title>
+<meta charset="utf-8">
+<link href="CSS/style.css" rel="stylesheet">
+<title>Gestione Utenti</title>
 </head>
 
+<body>
 
-<body onload="consoleText(['account.', 'Choose what you want to do'], 'text', ['tomato', 'rebeccapurple'])" onresize="brutta()">
+<main class="bgPage">
+<div class="container">
 
- 
-  <main class="bgPage">
-    <div id="kakatoca" class="bg">
-      <section>
-<table>
-	<tr>
-    	<th>NOME</th>
-    	<th>COGNOME</th>
-    	<th>EMAIL</th>
-    	<th>STATUS ADMIN</th>
-    	<th class="mamma"></th>
-	</tr>
-	<%for(User u: prodotti){ %>
-	<tr>
-		<td><%=u.getNome()%></td>
-    	<td><%=u.getCognome()%></td>
-    	<td><%=u.getEmail()%></td>
-    	<td><%=u.isAdmin()%></td>
-    	<td class="mamma" colspan="5">
-			<div class="dataContainer center-item">
-   	   			<div class="modifyBtn">
-          			<a href="Manage?activity=modify&email=<%=u.getEmail()%>"><img src="<%=getServletContext().getContextPath()%>/img/icon/iconModify.png" alt="" class="remove-item"></a>
-      			</div>
-       			<div class="modifyBtn">
-          			<a href="Manage?activity=remove&email=<%=u.getEmail()%>"><img src="<%=getServletContext().getContextPath()%>/img/icon/iconTrash.png" alt="" class="remove-item"></a>
-     			</div>
-       		</div>
-		</td>
-	</tr>
-	<tr class="papa">
-		<td colspan="4">
-			<div class="dataContainer center-item">
-   	   			<div class="modifyBtn">
-          			<a href=""><img src="<%=getServletContext().getContextPath()%>/img/icon/iconModify.png" alt="" class="remove-item"></a>
-      			</div>
-       			<div class="modifyBtn">
-          			<a href="Manage?activity=remove&email=<%=u.getEmail()%>"><img src="<%=getServletContext().getContextPath()%>/img/icon/iconTrash.png" alt="" class="remove-item"></a>
-       			</div>
-       		</div>
-		</td>
-	</tr>
-	<%} %>
-</table>
-      </section>
+<h2 style="text-align:center;">Gestione Utenti</h2>
+
+<%
+if(utenti != null && !utenti.isEmpty()){
+    for(User u : utenti){
+%>
+
+<div class="itemContainer">
+    <div class="cart-item">
+        <div class="cartRow">
+
+            <!-- Dati utente -->
+            <h5><%=u.getNome()%></h5>
+            <h5><%=u.getCognome()%></h5>
+            <h5><%=u.getEmail()%></h5>
+            <h5><%=u.isAdmin() ? "Admin" : "Utente"%></h5>
+
+            <div class="last">
+                <div class="dataContainer center-item">
+
+                    <!-- Modifica ruolo -->
+                    <a href="javascript:void(0);" 
+                       onclick="toggleEditForm('<%=u.getEmail()%>')">
+                        ✏️
+                    </a>
+
+                    <div id="editForm<%=u.getEmail()%>" 
+                         style="display:none; margin-top:5px;">
+                        <form action="UpdateUserServlet" method="post">
+                            <input type="hidden" name="email" value="<%=u.getEmail()%>">
+
+                            Ruolo:
+                            <select name="admin">
+                                <option value="true" <%=u.isAdmin() ? "selected":""%>>
+                                    Admin
+                                </option>
+                                <option value="false" <%=!u.isAdmin() ? "selected":""%>>
+                                    Utente
+                                </option>
+                            </select>
+
+                            <button type="submit">Salva</button>
+                        </form>
+                    </div>
+
+                    <!-- Eliminazione -->
+                    <a href="javascript:void(0);" 
+                       onclick="toggleDeleteForm('<%=u.getEmail()%>')">
+                        🗑️
+                    </a>
+
+                    <div id="deleteForm<%=u.getEmail()%>" 
+                         style="display:none; margin-top:5px;">
+                        <form action="DeleteUserServlet" method="post">
+                            <input type="hidden" name="email" value="<%=u.getEmail()%>">
+                            Sei sicuro?
+                            <button type="submit">Sì</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
     </div>
-    <script src="app.js"></script>
-  </main>
+</div>
+
+<%
+    }
+} else {
+%>
+    <p style="text-align:center;">Nessun utente trovato</p>
+<%
+}
+%>
+
+</div>
+</main>
+
+<script>
+function toggleDeleteForm(email) {
+    var form = document.getElementById("deleteForm" + email);
+    form.style.display = (form.style.display === "block") ? "none" : "block";
+}
+
+function toggleEditForm(email) {
+    var form = document.getElementById("editForm" + email);
+    form.style.display = (form.style.display === "block") ? "none" : "block";
+}
+</script>
+
 </body>
 </html>
