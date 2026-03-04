@@ -97,50 +97,40 @@ public class UsersDaoDataSource implements IUsersDAO<User> {
 
 	@Override
 	public synchronized ArrayList<User> doRetrieveAll(String order) throws SQLException {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		
-		ArrayList<User> products = new ArrayList<User>();
 
-		String selectSQL = "SELECT * FROM " + UsersDaoDataSource.TABLE_NAME;
-		String walletSQL = "SELECT * FROM valuta WHERE email = ?";
-		connection = ds.getConnection();
-		try {
-		
-		if (order != null && !order.equals("")) {
-			selectSQL += " ORDER BY ?";
-			preparedStatement = connection.prepareStatement(selectSQL);
-			
-			preparedStatement.setString(1, order);
-		}else {
-			preparedStatement = connection.prepareStatement(selectSQL);
-		}
+	    Connection connection = null;
+	    PreparedStatement preparedStatement = null;
+	    ArrayList<User> utenti = new ArrayList<User>();
 
-			ResultSet rs = preparedStatement.executeQuery();
+	    String selectSQL = "SELECT * FROM " + TABLE_NAME;
 
-			while (rs.next()) {
-				preparedStatement = connection.prepareStatement(walletSQL);
-				User bean = new User();
-				
-				
-				bean.setNome(rs.getString("nome"));
-				bean.setCognome(rs.getString("cognome"));
-				bean.setPassword(rs.getString("pwd"));
-				bean.setEmail(rs.getString("email"));
-				bean.setAdmin(rs.getBoolean("isAdmin"));
-				products.add(bean);
-			}
+	    try {
+	        connection = ds.getConnection();
+	        preparedStatement = connection.prepareStatement(selectSQL);
 
-		} finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} finally {
-				if (connection != null)
-					connection.close();
-			}
-		}
-		return products;
+	        ResultSet rs = preparedStatement.executeQuery();
+
+	        while (rs.next()) {
+
+	            User bean = new User();
+
+	            bean.setNome(rs.getString("nome"));
+	            bean.setCognome(rs.getString("cognome"));
+	            bean.setPassword(rs.getString("pwd"));
+	            bean.setEmail(rs.getString("email"));
+	            bean.setAdmin(rs.getBoolean("isAdmin"));
+
+	            utenti.add(bean);
+	        }
+
+	    } finally {
+	        if (preparedStatement != null)
+	            preparedStatement.close();
+	        if (connection != null)
+	            connection.close();
+	    }
+
+	    return utenti;
 	}
 
 	
@@ -225,15 +215,28 @@ public class UsersDaoDataSource implements IUsersDAO<User> {
 	
 	@Override 
 	public void doUpdate(User user) throws SQLException {
-		String updateSQL = "UPDATE " + UsersDaoDataSource.TABLE_NAME + " SET isAdmin = ? WHERE email = ?";
-		Connection connection = ds.getConnection();
-		PreparedStatement preparedStatement = null;
-		preparedStatement = connection.prepareStatement(updateSQL);
-		preparedStatement.setBoolean(1, user.isAdmin());
-		preparedStatement.setString(2, user.getEmail());
-		preparedStatement.executeUpdate();
-		
-		
+
+	    String updateSQL = "UPDATE " + TABLE_NAME + 
+	                       " SET isAdmin = ? WHERE email = ?";
+
+	    Connection connection = null;
+	    PreparedStatement preparedStatement = null;
+
+	    try {
+	        connection = ds.getConnection();
+	        preparedStatement = connection.prepareStatement(updateSQL);
+
+	        preparedStatement.setBoolean(1, user.isAdmin());
+	        preparedStatement.setString(2, user.getEmail());
+
+	        preparedStatement.executeUpdate();
+
+	    } finally {
+	        if(preparedStatement != null)
+	            preparedStatement.close();
+	        if(connection != null)
+	            connection.close();
+	    }
 	}
 	
 }

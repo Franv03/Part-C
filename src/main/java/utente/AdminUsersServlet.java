@@ -22,9 +22,17 @@ public class AdminUsersServlet extends HttpServlet {
         UsersDaoDataSource dao = new UsersDaoDataSource();
 
         try {
+            // Recupera gli utenti dal DAO
             ArrayList<User> utenti = dao.doRetrieveAll(null);
+
+            // Aggiungi un log per il debug
+            System.out.println("DEBUG - Utenti trovati: " + utenti.size());
+
+            // Imposta l'attributo utenti per la JSP
             request.setAttribute("utenti", utenti);
-            request.getRequestDispatcher("/adminUsers.jsp").forward(request, response);
+
+            // Forward alla pagina corretta (gestioneAccount.jsp)
+            request.getRequestDispatcher("/gestioneAccount.jsp").forward(request, response);
         } catch (SQLException e) {
             e.printStackTrace();
         }
