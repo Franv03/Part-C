@@ -55,7 +55,7 @@ public class OrdiniServlet extends HttpServlet {
 		}
 		
 		sessione.setAttribute("ordini", o);
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/admin/gindex.jsp");
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("gestioneAcquisti.jsp");
 		dispatcher.forward(request, response);
 		
 	}

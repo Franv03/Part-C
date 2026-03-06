@@ -29,7 +29,7 @@ ArrayList<ProductBean> prodotti =
 			<ul class="NavbarSub">
 				<li><a class="navLink" href="Admin">Gestione Prodotti</a></li>
 				<li><a class="navLink" href=AdminUsers>Gestione Profili</a></li>
-				<li><a class="navLink" href="delivery.html">Gestione Acquisti</a></li>
+				<li><a class="navLink" href="gestioneAcquisti.jsp">Gestione Acquisti</a></li>
 				<li><a class="navIconLink" href="Logout">
 					<img class="navIcon" src="img/icons/userLog.png">
 				</a></li>

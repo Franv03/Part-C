@@ -23,7 +23,7 @@ public class OrderDaoDataSource {
 			Context initCtx = new InitialContext();
 			Context envCtx = (Context) initCtx.lookup("java:comp/env");
 
-			ds = (DataSource) envCtx.lookup("jdbc/coinverter");
+			ds = (DataSource) envCtx.lookup("jdbc/PartC");
 
 		} catch (NamingException e) {
 			System.out.println("Error:" + e.getMessage());
