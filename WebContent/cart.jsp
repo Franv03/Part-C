@@ -134,12 +134,14 @@
 								</div>
 							</div>
 							<div class="CheckOutContainer">
-								<%if(user != null) {%>
-									<a href="pay.html" type="button" class="checkOutBtn">Check Out</a>
-								<%}else{%>
-									<a href="login.jsp" type="button" class="checkOutBtn">Check Out</a>
-								<%} %>
-							</div>
+<% if(user != null) { %>
+    <form action="<%=request.getContextPath()%>/Checkout" method="POST">
+        <input type="submit" class="checkOutBtn" value="Check Out">
+    </form>
+<% } else { %>
+    <a href="login.jsp" type="button" class="checkOutBtn">Check Out</a>
+<% } %>
+</div>
 						</div>
 						<%} %>
 					</div>

@@ -340,60 +340,46 @@ public class ProductDaoDataSource implements IProductDAO<ProductBean> {
 	// Registra un ordine e i prodotti acquistati
 	@Override
 	public void doBuy(ArrayList<ProductBean> products, User u) throws SQLException {
-		String Ordinesql = "INSERT INTO ordine(data_acquisto, email) VALUES(?,?)";
-		String Prodottisql = "INSERT INTO acquisto(ID_ordine,q_acquisto,nome,tipo,prezzo) VALUES(?,?,?,?,?)";
-		
-		ArrayList<ProductBean> catalogati = new ArrayList<ProductBean>();
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		connection = ds.getConnection();
-		try {
-			//creo l'ordine
-			preparedStatement = connection.prepareStatement(Ordinesql,Statement.RETURN_GENERATED_KEYS);
-			preparedStatement.setDate(1, Date.valueOf(java.time.LocalDate.now()));
-			preparedStatement.setString(2, u.getEmail());
-			preparedStatement.execute();
-			ResultSet id = preparedStatement.getGeneratedKeys();
-			int generatedId = -1;
-			if (id.next()) {generatedId = id.getInt(1); }
-			else System.out.println("ProductDaoDataSource + ERRORE KEY");
-			System.out.println("ProductDaoDataSource: Ordine eseguito +" + generatedId);
-			preparedStatement.close();
-					
-			//aggiungo i prodotti acquistati all'ordine
-			preparedStatement = connection.prepareStatement(Prodottisql);
-			preparedStatement.setInt(1, generatedId);
-			
-			for(ProductBean p: products) {
-				String currentProduct = p.getName();
-				System.out.println("ProductDaoDataSource: PRECatalogati +" + p.getName());
-				if(!catalogati.contains(p)) {
-					catalogati.add(p);
-					System.out.println("ProductDaoDataSource: Catalogati +" + p.getName());
-					int i = 0; 
-					for(ProductBean f: products) if(f.getName().equals(currentProduct))i++;
-					System.out.println("ProductDaoDataSource: i + " +i);
-					preparedStatement.setInt(2, i);
-					preparedStatement.setString(3, currentProduct);
-					preparedStatement.setString(4, p.getCategory());
-					preparedStatement.setDouble(5, (p.getPrice()*i));
-					preparedStatement.addBatch();
-				}
-			}
-			preparedStatement.executeBatch();
-			System.out.println("ProductDaoDataSource: Batch ORdine eseguita");
-			
-			
-		}finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} finally {
-				if (connection != null)
-					connection.close();
-			}
-		}
-		
+	    String Ordinesql = "INSERT INTO ordine(data_acquisto, email) VALUES(?,?)";
+	    String Prodottisql = "INSERT INTO acquisto(ID_ordine,q_acquisto,nome_prodotto,categoria_prodotto,prezzo) VALUES(?,?,?,?,?)";
+
+	    Connection connection = null;
+	    PreparedStatement preparedStatement = null;
+
+	    connection = ds.getConnection();
+	    try {
+	        // Inserimento ordine
+	        preparedStatement = connection.prepareStatement(Ordinesql, Statement.RETURN_GENERATED_KEYS);
+	        preparedStatement.setDate(1, Date.valueOf(java.time.LocalDate.now()));
+	        preparedStatement.setString(2, u.getEmail());
+	        preparedStatement.executeUpdate();
+
+	        ResultSet rs = preparedStatement.getGeneratedKeys();
+	        int generatedId = -1;
+	        if (rs.next()) {
+	            generatedId = rs.getInt(1);
+	        } else {
+	            throw new SQLException("Errore generazione ID ordine");
+	        }
+	        preparedStatement.close();
+
+	        // Inserimento prodotti
+	        preparedStatement = connection.prepareStatement(Prodottisql);
+	        for (ProductBean p : products) {
+	            preparedStatement.setInt(1, generatedId);
+	            preparedStatement.setInt(2, p.getQuantity());                // quantità
+	            preparedStatement.setString(3, p.getName());                 // nome_prodotto
+	            preparedStatement.setString(4, p.getCategory());             // categoria_prodotto
+	            preparedStatement.setDouble(5, p.getPrice() * p.getQuantity()); // prezzo totale per il prodotto
+
+	            preparedStatement.addBatch();
+	        }
+	        preparedStatement.executeBatch();
+
+	    } finally {
+	        if (preparedStatement != null) preparedStatement.close();
+	        if (connection != null) connection.close();
+	    }
 	}
 
 

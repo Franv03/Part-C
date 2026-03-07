@@ -1,13 +1,11 @@
 package acquisto;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
-
-import acquisto.Ordine;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -15,135 +13,103 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 public class OrderDaoDataSource {
-	
-	private static DataSource ds;
 
-	static {
-		try {
-			Context initCtx = new InitialContext();
-			Context envCtx = (Context) initCtx.lookup("java:comp/env");
+    private static DataSource ds;
 
-			ds = (DataSource) envCtx.lookup("jdbc/PartC");
+    static {
+        try {
+            Context initCtx = new InitialContext();
+            Context envCtx = (Context) initCtx.lookup("java:comp/env");
+            ds = (DataSource) envCtx.lookup("jdbc/PartC");
+        } catch (NamingException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
 
-		} catch (NamingException e) {
-			System.out.println("Error:" + e.getMessage());
-		}
-	}
+    // Recupera tutti gli ordini con prodotti
+    public ArrayList<Ordine> doRetrieveAllOrders() throws SQLException {
+        String query = "SELECT o.ID_ordine, o.data_acquisto, o.email, " +
+                       "a.q_acquisto, a.nome_prodotto, a.categoria_prodotto, a.prezzo " +
+                       "FROM ordine o INNER JOIN acquisto a ON o.ID_ordine = a.ID_ordine";
 
-	private static final String TABLE_NAME = "ordine";
-	
-	
-	public ArrayList<Ordine> doRetrieveAllOrders() throws SQLException {
-		String query = "SELECT ordine.ID_ordine,data_acquisto,email,q_acquisto,nome,categoria,prezzo FROM ordine INNER JOIN acquisto ON ordine.ID_ordine = acquisto.ID_ordine";
-		
-		ArrayList<Ordine> ordini = new ArrayList<Ordine>();
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		connection = ds.getConnection();
-		try {
-			//creo l'ordine
-			preparedStatement = connection.prepareStatement(query);
-			ResultSet rs = preparedStatement.executeQuery();
-			while(rs.next()) {
-				Ordine o = new Ordine();
-				o.setID_ordine(rs.getInt("ID_ordine"));
-				o.setData_acquisto(rs.getDate("data_acquisto"));
-				o.setEmail(rs.getString("email"));
-				o.setQ_acquisto(rs.getInt("q_acquisto"));
-				o.setNome_prodotto(rs.getString("nome"));
-				o.setCategoria_prodotto(rs.getString("categoria"));	
-				o.setPrezzo(rs.getDouble("prezzo"));
-				ordini.add(o);
-			}
+        ArrayList<Ordine> ordini = new ArrayList<>();
+        try (Connection connection = ds.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
 
-		}finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} finally {
-				if (connection != null)
-					connection.close();
-			}
-		}
-		
-		return ordini;
-	}
-	
-	public ArrayList<Ordine> doRetrieveByDateFilter(String data1,String data2) throws SQLException {
-		String query = "SELECT ordine.ID_ordine,data_acquisto,email,q_acquisto,nome,categoria,prezzo FROM ordine INNER JOIN acquisto ON ordine.ID_ordine = acquisto.ID_ordine WHERE data_acquisto >= ? AND data_acquisto <= ?";
-		
-		ArrayList<Ordine> ordini = new ArrayList<Ordine>();
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		connection = ds.getConnection();
-		try {
-			
-			preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setString(1, data1);
-			preparedStatement.setString(2, data2);
-			ResultSet rs = preparedStatement.executeQuery();
-			while(rs.next()) {
-				Ordine o = new Ordine();
-				o.setID_ordine(rs.getInt("ID_ordine"));
-				o.setData_acquisto(rs.getDate("data_acquisto"));
-				o.setEmail(rs.getString("email"));
-				o.setQ_acquisto(rs.getInt("q_acquisto"));
-				o.setNome_prodotto(rs.getString("nome"));
-				o.setCategoria_prodotto(rs.getString("categoria"));
-				o.setPrezzo(rs.getDouble("prezzo"));
-				ordini.add(o);
-			}
+            while (rs.next()) {
+                Ordine o = new Ordine();
+                o.setID_ordine(rs.getInt("ID_ordine"));
+                o.setData_acquisto(rs.getDate("data_acquisto"));
+                o.setEmail(rs.getString("email"));
+                o.setQ_acquisto(rs.getInt("q_acquisto"));
+                o.setNome_prodotto(rs.getString("nome_prodotto"));
+                o.setCategoria_prodotto(rs.getString("categoria_prodotto"));
+                o.setPrezzo(rs.getDouble("prezzo"));
+                ordini.add(o);
+            }
+        }
+        return ordini;
+    }
 
-		}finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} finally {
-				if (connection != null)
-					connection.close();
-			}
-		}
-		
-		return ordini;
-	}
-	
-	public ArrayList<Ordine> doRetrieveByNameFilter(String nome) throws SQLException {
-		String query = "SELECT ordine.ID_ordine,data_acquisto,email,q_acquisto,nome,categoria,prezzo FROM ordine INNER JOIN acquisto ON ordine.ID_ordine = acquisto.ID_ordine WHERE email = ?";
-		
-		ArrayList<Ordine> ordini = new ArrayList<Ordine>();
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		connection = ds.getConnection();
-		try {
-			//creo l'ordine
-			preparedStatement = connection.prepareStatement(query);
-			
-			preparedStatement.setString(1, nome);
-			ResultSet rs = preparedStatement.executeQuery();
-			while(rs.next()) {
-				Ordine o = new Ordine();
-				o.setID_ordine(rs.getInt("ID_ordine"));
-				o.setData_acquisto(rs.getDate("data_acquisto"));
-				o.setEmail(rs.getString("email"));
-				o.setQ_acquisto(rs.getInt("q_acquisto"));
-				o.setNome_prodotto(rs.getString("nome"));
-				o.setCategoria_prodotto(rs.getString("categoria"));
-				o.setPrezzo(rs.getDouble("prezzo"));
-				ordini.add(o);
-			}
+    // Recupera ordini filtrati per date
+    public ArrayList<Ordine> doRetrieveByDateFilter(String data1, String data2) throws SQLException {
+        String query = "SELECT o.ID_ordine, o.data_acquisto, o.email, " +
+                       "a.q_acquisto, a.nome_prodotto, a.categoria_prodotto, a.prezzo " +
+                       "FROM ordine o INNER JOIN acquisto a ON o.ID_ordine = a.ID_ordine " +
+                       "WHERE o.data_acquisto >= ? AND o.data_acquisto <= ?";
 
-		}finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} finally {
-				if (connection != null)
-					connection.close();
-			}
-		}
-		
-		return ordini;
-	}
-	
-	
+        ArrayList<Ordine> ordini = new ArrayList<>();
+        try (Connection connection = ds.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+
+            ps.setString(1, data1);
+            ps.setString(2, data2);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Ordine o = new Ordine();
+                    o.setID_ordine(rs.getInt("ID_ordine"));
+                    o.setData_acquisto(rs.getDate("data_acquisto"));
+                    o.setEmail(rs.getString("email"));
+                    o.setQ_acquisto(rs.getInt("q_acquisto"));
+                    o.setNome_prodotto(rs.getString("nome_prodotto"));
+                    o.setCategoria_prodotto(rs.getString("categoria_prodotto"));
+                    o.setPrezzo(rs.getDouble("prezzo"));
+                    ordini.add(o);
+                }
+            }
+        }
+        return ordini;
+    }
+
+    // Recupera ordini filtrati per email utente
+    public ArrayList<Ordine> doRetrieveByNameFilter(String email) throws SQLException {
+        String query = "SELECT o.ID_ordine, o.data_acquisto, o.email, " +
+                       "a.q_acquisto, a.nome_prodotto, a.categoria_prodotto, a.prezzo " +
+                       "FROM ordine o INNER JOIN acquisto a ON o.ID_ordine = a.ID_ordine " +
+                       "WHERE o.email = ?";
+
+        ArrayList<Ordine> ordini = new ArrayList<>();
+        try (Connection connection = ds.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+
+            ps.setString(1, email);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Ordine o = new Ordine();
+                    o.setID_ordine(rs.getInt("ID_ordine"));
+                    o.setData_acquisto(rs.getDate("data_acquisto"));
+                    o.setEmail(rs.getString("email"));
+                    o.setQ_acquisto(rs.getInt("q_acquisto"));
+                    o.setNome_prodotto(rs.getString("nome_prodotto"));
+                    o.setCategoria_prodotto(rs.getString("categoria_prodotto"));
+                    o.setPrezzo(rs.getDouble("prezzo"));
+                    ordini.add(o);
+                }
+            }
+        }
+        return ordini;
+    }
 }

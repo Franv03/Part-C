@@ -29,7 +29,7 @@ ArrayList<ProductBean> prodotti =
 			<ul class="NavbarSub">
 				<li><a class="navLink" href="Admin">Gestione Prodotti</a></li>
 				<li><a class="navLink" href=AdminUsers>Gestione Profili</a></li>
-				<li><a class="navLink" href="gestioneAcquisti.jsp">Gestione Acquisti</a></li>
+				<li><a class="navLink" href="Ordini">Gestione Acquisti</a></li>
 				<li><a class="navIconLink" href="Logout">
 					<img class="navIcon" src="img/icons/userLog.png">
 				</a></li>
@@ -47,7 +47,7 @@ ArrayList<ProductBean> prodotti =
 <section>
 <div class="container">
 <h2 style="text-align:center;">Gestione Prodotti</h2>
-<a href="<%=request.getContextPath()%>aggiungiProd.jsp" class="btn">
+<a href="<%=request.getContextPath()%>/aggiungiProd.jsp" class="btn">
     Aggiungi Prodotto
 </a>
 <%
