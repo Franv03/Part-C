@@ -3,16 +3,14 @@
     import="java.util.ArrayList, prodotto.ProductBean, prodotto.ProductDaoDataSource, java.text.DecimalFormat" %>
 
 <%
-    DecimalFormat df = new DecimalFormat("#.##");
+DecimalFormat df = new DecimalFormat("#.##");
 
-    ArrayList<ProductBean> prodotti = new ArrayList<>();
-    try {
-        ProductDaoDataSource dao = new ProductDaoDataSource();
-        prodotti = dao.doRetrieveAvailable();
-    } catch (Exception e) {
-        e.printStackTrace();
-        prodotti = new ArrayList<>();
-    }
+// Recupera i prodotti dal request attribute (impostato dalla ShopServlet)
+ArrayList<ProductBean> prodotti = (ArrayList<ProductBean>) request.getAttribute("products1");
+
+if (prodotti == null) {
+    prodotti = new ArrayList<>(); // fallback se la lista è vuota
+}
 %>
 
 <!doctype html>
@@ -43,7 +41,12 @@
         <div class="column">
             <div class="category">
                 <h2>Categorie</h2>
-
+				<div class="categoryItem">
+    				<a class="selectionMenu" href="Shop?filter=Tutto&action=categoria">
+        				<img class="categoryIcon" src="img/icons/iconAll.png"><span>Tutti i prodotti</span>
+    				</a>
+				</div>
+				
                 <div class="categoryItem">
                     <a class="selectionMenu" href="Shop?filter=Motherboard&action=categoria">
                         <img class="categoryIcon" src="img/icons/iconMb.png"><span>Schede Madre</span>
@@ -86,11 +89,6 @@
                     </a>
                 </div>
 
-                <div class="categoryItem">
-                    <a class="selectionMenu" href="Shop?filter=Acc&action=categoria">
-                        <img class="categoryIcon" src="img/icons/iconAcc.png"><span>Accessori</span>
-                    </a>
-                </div>
 
             </div>
         </div>

@@ -38,7 +38,7 @@
 			<div class="centerPosition">
 				<ul class="NavbarSub">
 					<li><a class="navLink" href="index.jsp">Home</a></li>
-					<li><a class="navLink" href="shop.jsp">Shop</a></li>
+					<li><a class="navLink" href="Shop?filter=Tutto&action=categoria">Shop</a></li>
 					<%if(user == null){%>
 						<li><a class="navIconLink" href="login.jsp"><img class="navIcon" src="img/icons/userUn.png"></a></li>
 						

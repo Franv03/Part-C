@@ -1,6 +1,10 @@
-<%@ page import="java.util.ArrayList,acquisto.Ordine,utente.User" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"
+import="java.util.ArrayList,acquisto.Ordine,utente.User,java.text.DecimalFormat" %>
+
 <%
 ArrayList<Ordine> ordini = (ArrayList<Ordine>) request.getAttribute("ordini");
+DecimalFormat df = new DecimalFormat("#.00");
 %>
 <!DOCTYPE html>
 <html lang="it" dir="ltr">
@@ -66,7 +70,7 @@ ArrayList<Ordine> ordini = (ArrayList<Ordine>) request.getAttribute("ordini");
       <td><%=o.getQ_acquisto()%></td>
       <td><%=o.getNome_prodotto()%></td>
       <td><%=o.getCategoria_prodotto()%></td>
-      <td><%=o.getPrezzo()%></td>
+      <td><%=df.format(o.getPrezzo())%>€</td>
     </tr>
     <% } } else { %>
     <tr>

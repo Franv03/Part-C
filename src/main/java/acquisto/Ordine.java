@@ -34,9 +34,6 @@ public class Ordine {
 		return prezzo;
 	}
 	
-	
-	
-	
 	public void setID_ordine(int iD_ordine) {
 		ID_ordine = iD_ordine;
 	}
