@@ -42,7 +42,7 @@ ArrayList<ProductBean> prodotti =
 
 <body>
 
-<main class="bgPage">
+<main>
 <div class="bg">
 <section>
 <div class="container">
@@ -76,7 +76,7 @@ if(prodotti != null && !prodotti.isEmpty()){
             <h5><%=p.getCategory()%></h5>
 
             <!-- Azioni: matita e cestino -->
-            <div class="last" id="lastBtn">
+            <div class="last">
                 <div class="dataContainer center-item">
                     
                     <!-- Pulsante matita -->

@@ -27,7 +27,7 @@
 <link rel="shortcut icon" type="image/gif" href="img/logo.png">
   <meta charset="utf-8">
   <meta name="viewport" content="initial-scale = 1, width = device-width">
-  <link id="mystylesheet" rel="stylesheet" type="text/css" href="CSS/light.css">
+  <link rel="stylesheet" href="CSS/style.css">
   <script src="JS/scripts.js"></script>
 
 <title>CoinVerter</title>
@@ -66,10 +66,10 @@
 		<td colspan="4">
 			<div class="dataContainer center-item">
    	   			<div class="modifyBtn">
-          			<a href=""><img src="<%=getServletContext().getContextPath()%>/img/icon/iconModify.png" alt="" class="remove-item"></a>
+          			<a href=""><img src="<%=getServletContext().getContextPath()%>/img/icon/iconModify.png" alt="" class="removeItem"></a>
       			</div>
        			<div class="modifyBtn">
-          			<a href="Manage?activity=remove&email=<%=u.getEmail()%>"><img src="<%=getServletContext().getContextPath()%>/img/icon/iconTrash.png" alt="" class="remove-item"></a>
+          			<a href="Manage?activity=remove&email=<%=u.getEmail()%>"><img src="<%=getServletContext().getContextPath()%>/img/icon/iconTrash.png" alt="" class="removeItem"></a>
        			</div>
        		</div>
 		</td>

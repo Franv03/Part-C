@@ -72,7 +72,7 @@ if(utenti != null && !utenti.isEmpty()){
         <div class="dataContainer center-item">
 
             <!-- Modifica -->
-            <a href="javascript:void(0);" 
+            <a href="javascript:void(0);" class="modifyBtn"
                onclick="toggleEdit('<%=safeId%>')">
                 <img src="img/icons/pencil.png" class="removeItem">
             </a>
@@ -98,7 +98,7 @@ if(utenti != null && !utenti.isEmpty()){
             </div>
 
             <!-- Elimina -->
-            <a href="javascript:void(0);" 
+            <a href="javascript:void(0);" class="modifyBtn"
                onclick="toggleDelete('<%=safeId%>')">
                 <img src="img/icons/iconTrash.png" class="removeItem">
             </a>
