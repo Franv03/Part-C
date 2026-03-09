@@ -32,9 +32,6 @@ DecimalFormat df = new DecimalFormat("#.00");
 				<li><a class="navLink" href="Admin">Gestione Prodotti</a></li>
 				<li><a class="navLink" href="AdminUsers">Gestione Profili</a></li>
 				<li><a class="navLink" href="Ordini">Gestione Acquisti</a></li>
-				<li><a class="navIconLink" href="Logout">
-					<img class="navIcon" src="img/icons/userLog.png">
-				</a></li>
 			</ul>
 		</div>
 	</div>
