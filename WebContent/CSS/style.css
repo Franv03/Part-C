@@ -829,8 +829,6 @@ main {
 
 .loginForm button[type="submit"], button[type="button"] {
 	padding: 10px;
-	display: inline-flex;
-	flex-direction: row;
 	align-items: center;
 	margin-left: auto;
 	margin-right: auto;
@@ -847,6 +845,28 @@ main {
 
 .loginForm #reg {
 	padding-top: 15px;
+}
+
+.popup-content button {
+    background-color: #CE8946;
+    color: white;
+}
+
+.btnAction {
+    padding: 10px;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    border: none;
+    background-color: #CE8946;
+    color: #fff;
+    border-radius: 20px;
+    padding-bottom: 10px;
+        width: 60px;
+}
+
+.btnAction:hover {
+    background-color: #B06E2E;
 }
 
 .fileDrop {

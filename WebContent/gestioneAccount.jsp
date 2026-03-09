@@ -68,48 +68,17 @@ if(utenti != null && !utenti.isEmpty()){
     <div class="last">
         <div class="dataContainer center-item">
 
-            <!-- Modifica -->
-            <a href="javascript:void(0);" class="modifyBtn"
-               onclick="toggleEdit('<%=safeId%>')">
-                <img src="img/icons/pencil.png" class="removeItem">
-            </a>
+           <!-- Modifica -->
+<a href="javascript:void(0);" class="modifyBtn"
+   onclick="openEditPopup('<%=u.getEmail()%>', '<%=u.isAdmin()%>')">
+    <img src="img/icons/pencil.png" class="removeItem">
+</a>
 
-            <div id="edit<%=safeId%>" 
-                 class="editForm" 
-                 style="display:none;">
-
-                <form action="UpdateUserServlet" method="post">
-                    <input type="hidden" name="email" value="<%=u.getEmail()%>">
-
-                    <select name="admin">
-                        <option value="true" <%=u.isAdmin() ? "selected":""%>>
-                            Admin
-                        </option>
-                        <option value="false" <%=!u.isAdmin() ? "selected":""%>>
-                            Utente
-                        </option>
-                    </select>
-
-                    <button type="submit">Salva</button>
-                </form>
-            </div>
-
-            <!-- Elimina -->
-            <a href="javascript:void(0);" class="modifyBtn"
-               onclick="toggleDelete('<%=safeId%>')">
-                <img src="img/icons/iconTrash.png" class="removeItem">
-            </a>
-
-            <div id="delete<%=safeId%>" 
-                 class="editForm" 
-                 style="display:none;">
-
-                <form action="DeleteUserServlet" method="post">
-                    <input type="hidden" name="email" value="<%=u.getEmail()%>">
-                    Sei sicuro?
-                    <button type="submit">Sì</button>
-                </form>
-            </div>
+           <!-- Elimina -->
+<a href="javascript:void(0);" class="modifyBtn"
+   onclick="openDeletePopup('<%=u.getEmail()%>')">
+    <img src="img/icons/iconTrash.png" class="removeItem">
+</a>
 
         </div>
     </div>
@@ -131,16 +100,83 @@ if(utenti != null && !utenti.isEmpty()){
 </main>
 
 <script>
-function toggleEdit(id) {
-    var div = document.getElementById("edit" + id);
-    div.style.display = (div.style.display === "block") ? "none" : "block";
-}
-
 function toggleDelete(id) {
     var div = document.getElementById("delete" + id);
     div.style.display = (div.style.display === "block") ? "none" : "block";
 }
+
+function openEditPopup(email, isAdmin) {
+
+    document.getElementById("editPopupOverlay").style.display = "flex";
+
+    document.getElementById("editEmail").value = email;
+
+    if(isAdmin === "true"){
+        document.getElementById("editAdmin").value = "true";
+    } else {
+        document.getElementById("editAdmin").value = "false";
+    }
+}
+
+function closeEditPopup(){
+    document.getElementById("editPopupOverlay").style.display = "none";
+}
+
+function openDeletePopup(email){
+    document.getElementById("deletePopupOverlay").style.display = "flex";
+    document.getElementById("deleteEmail").value = email;
+}
+
+function closeDeletePopup(){
+    document.getElementById("deletePopupOverlay").style.display = "none";
+}
 </script>
 
+<div class="popup-overlay" id="editPopupOverlay">
+    <div class="popup">
+
+        <a class="close" onclick="closeEditPopup()">x</a>
+
+        <div class="popup-content">
+
+            <h3>Modifica ruolo utente</h3>
+
+            <form action="UpdateUserServlet" method="post">
+
+                <input type="hidden" name="email" id="editEmail">
+
+                <select name="admin" id="editAdmin">
+                    <option value="true">Admin</option>
+                    <option value="false">Utente</option>
+                </select>
+
+                <br><br>
+
+                <button class="btnAction" type="submit">Salva</button>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<div class="popup-overlay" id="deletePopupOverlay">
+    <div class="popup">
+
+        <a class="close" onclick="closeDeletePopup()">x</a>
+
+        <div class="popup-content">
+
+            <h3>Sei sicuro di eliminare questo utente?</h3>
+
+            <form action="DeleteUserServlet" method="post">
+                <input type="hidden" name="email" id="deleteEmail">
+                <button type="submit" class="btnAction">Sì</button>
+                <button type="button" class="popup-content button" onclick="closeDeletePopup()">Annulla</button>
+            </form>
+
+        </div>
+    </div>
+</div>
 </body>
 </html>
