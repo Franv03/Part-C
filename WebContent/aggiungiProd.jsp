@@ -6,7 +6,7 @@
 <link rel="shortcut icon" type="image/gif" href="<%=request.getServletContext().getContextPath()%>/img/logo.png">
 <meta charset="utf-8">
 <meta name="viewport" content="initial-scale = 1, width = device-width">
-<link id="mystylesheet" rel="stylesheet" type="text/css" href="<%=request.getServletContext().getContextPath()%>/CSS/light.css">
+<link href="CSS/style.css" rel="stylesheet">
 <title>Part-C</title>
 </head>
 

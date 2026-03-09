@@ -42,7 +42,8 @@ ArrayList<User> utenti =
 
 <body>
 
-<main class="bgPage">
+<main>
+<div class="bg">
 <div class="container">
 
 <h2 style="text-align:center;">Gestione Utenti</h2>
@@ -58,10 +59,7 @@ if(utenti != null && !utenti.isEmpty()){
 <div class="cart-item">
 <div class="cartRow">
 
-    <!-- Icona utente -->
-    <div class="imgContainer center-item">
-        <img src="img/icons/user.png" class="removeItem">
-    </div>
+    
 
     <!-- Dati utente -->
     <h5><%=u.getNome()%></h5>
@@ -122,7 +120,7 @@ if(utenti != null && !utenti.isEmpty()){
 </div>
 </div>
 </div>
-
+</div>
 <%
     }
 } else {

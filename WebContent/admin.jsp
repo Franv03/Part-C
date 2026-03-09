@@ -76,7 +76,7 @@ if(prodotti != null && !prodotti.isEmpty()){
             <h5><%=p.getCategory()%></h5>
 
             <!-- Azioni: matita e cestino -->
-            <div class="last">
+            <div class="last" id="lastBtn">
                 <div class="dataContainer center-item">
                     
                     <!-- Pulsante matita -->
@@ -140,8 +140,9 @@ if(prodotti != null && !prodotti.isEmpty()){
 </section>
 </div>
 
-<script src="app.js"></script>
 </main>
+
+
 <script>
 function toggleDeleteForm(code) {
     var form = document.getElementById("deleteForm" + code);
@@ -161,5 +162,7 @@ function toggleEditForm(code) {
     }
 }
 </script>
+
+
 </body>
 </html>

@@ -41,6 +41,7 @@ DecimalFormat df = new DecimalFormat("#.00");
 </header>
 
 <main>
+	<div class="bg">
   <div class="filterAdmin">
     <a href="Ordini"><input type="text" value="RIMUOVI FILTRO"></a>
     <form id="filterForm" method="POST" action="Ordini">
@@ -78,6 +79,8 @@ DecimalFormat df = new DecimalFormat("#.00");
     </tr>
     <% } %>
   </table>
+  </div>
 </main>
+
 </body>
 </html>

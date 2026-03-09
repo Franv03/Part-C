@@ -602,6 +602,13 @@ main {
     height: 50px;
 }
 
+#lastBtn {
+	margin-left: auto;
+    margin-right: 1%; 
+    align-content: center;
+    height: 80px;
+}
+
 
 #title {
 	text-align: center;
@@ -691,8 +698,9 @@ main {
 	padding-right: 30px;
 }
 
-.modifyBtn{
-	font-size: 0px;
+.modifyBtn {
+    font-size: 0px;
+    padding-right: 20px;
     padding-top: 10px;
     width: auto;
 }
