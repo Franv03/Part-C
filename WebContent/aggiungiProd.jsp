@@ -39,7 +39,7 @@
     </select>
 
     <div class="centerBtn">
-        <a href="<%=request.getContextPath()%>/Admin" class="btn">Annulla</a>
+        <a href="<%=request.getContextPath()%>/Admin" class="btnAction">Annulla</a>
         <button type="submit">Conferma</button>
     </div>
 </form>

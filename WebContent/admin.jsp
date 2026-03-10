@@ -42,7 +42,7 @@ ArrayList<ProductBean> prodotti =
 <section>
 <div class="container">
 <h2 style="text-align:center;">Gestione Prodotti</h2>
-<a href="<%=request.getContextPath()%>/aggiungiProd.jsp" class="btn">Aggiungi Prodotto</a>
+<a href="<%=request.getContextPath()%>/aggiungiProd.jsp" class="addBtn">Aggiungi Prodotto</a>
 
 <%
 if(prodotti != null && !prodotti.isEmpty()){

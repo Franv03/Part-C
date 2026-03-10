@@ -361,16 +361,20 @@ main {
 }
 
 .productContainer .productItem .productImg {
-	margin-bottom: 30px;
 	position: relative;
 	top: 0;
 	width: 90%;
 	transition: 0.3s all ease;
 }
 
-.productImage {
+/*.productImage {
 	max-width: 100%;
 	height: auto;
+}*/
+.productImage {
+	max-width: 90%;
+	max-height: 90%;
+	object-fit: contain;
 }
 
 .productContainer .productItem .productTitle, .productContainer .productItem .productPrice
@@ -624,6 +628,15 @@ main {
 	vertical-align: middle;
 }
 
+.imgBox {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+	margin-bottom: 30px;
+}
+
 #pImg, #pImg2 {
 	vertical-align: middle;
 	width: 50px;
@@ -829,6 +842,8 @@ main {
 
 .loginForm button[type="submit"], button[type="button"] {
 	padding: 10px;
+	display: inline-flex;
+	flex-direction: row;
 	align-items: center;
 	margin-left: auto;
 	margin-right: auto;
@@ -847,13 +862,9 @@ main {
 	padding-top: 15px;
 }
 
-.popup-content button {
-    background-color: #CE8946;
-    color: white;
-}
-
 .btnAction {
-    padding: 10px;
+    padding: 3px;
+    display: inline-block;
     align-items: center;
     margin-left: auto;
     margin-right: auto;
@@ -861,12 +872,28 @@ main {
     background-color: #CE8946;
     color: #fff;
     border-radius: 20px;
-    padding-bottom: 10px;
-        width: 60px;
+    padding-bottom: 5px;
+    width: 63px;
 }
 
 .btnAction:hover {
     background-color: #B06E2E;
+}
+
+.addBtn {
+    padding: 10px 20px;
+    vertical-align: 15px;
+    margin-left: 18px;
+    text-decoration: solid;
+    color: #CE8946;
+    background-color: #3b5d50;
+    border-radius: 50px;
+    opacity: 0.9;
+    font-weight: bold;
+}
+
+.addBtn:hover {
+	opacity: 0.8;
 }
 
 .fileDrop {
@@ -1009,6 +1036,24 @@ footer .navbar .NavbarSub li .navLinkFooter:before {
 	}
 }
 
+@media ( min-width : 500px) {
+	.imgBox {
+		height: 400px;
+	}
+}
+
+@media ( min-width : 525px) {
+	.imgBox {
+		height: 500px;
+	}
+}
+
+@media ( min-width : 600px) {
+	.imgBox {
+		height: 600px;
+	}
+}
+
 @media ( max-width : 600px) {
 	.column {
 		width: 21%;
@@ -1028,6 +1073,9 @@ footer .navbar .NavbarSub li .navLinkFooter:before {
 	}
 	.productContainer {
 		width: 33.33333333%;
+	}
+	.imgBox {
+		height: 300px;
 	}
 	.searchContainer {
 		width: 25%;
@@ -1070,6 +1118,9 @@ footer .navbar .NavbarSub li .navLinkFooter:before {
 	}
 	.searchContainer {
 		width: 40%;
+	}
+	.imgBox {
+		height: 400px;
 	}
 	
 	.itemName {

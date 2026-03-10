@@ -112,9 +112,9 @@ if (prodotti == null) {
 
                         <div id="shopProduct" class="productContainer">
                             <a class="productItem">
-
-                                <img src="<%=request.getServletContext().getContextPath()%>/<%=p.getPhoto()%>" class="ProductImage productImg">
-
+								<div class="imgBox">
+                                	<img src="<%=request.getServletContext().getContextPath()%>/<%=p.getPhoto()%>" class="ProductImage productImg">
+								</div>
                                 <h3 class="productTitle"><%=p.getName()%></h3>
 
                                 <strong class="productPrice">
