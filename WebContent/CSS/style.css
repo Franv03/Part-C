@@ -637,6 +637,18 @@ main {
 	margin-bottom: 30px;
 }
 
+.filterAdmin{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filterForm {
+	display: block;
+    margin-top: 0em;
+    unicode-bidi: isolate;
+}
+
 #pImg, #pImg2 {
 	vertical-align: middle;
 	width: 50px;
@@ -894,6 +906,17 @@ main {
 
 .addBtn:hover {
 	opacity: 0.8;
+}
+
+.addBtnFilter {
+    padding: 10px 20px;
+    margin-left: 18px;
+    text-decoration: solid;
+    color: #CE8946;
+    background-color: #3b5d50;
+    border-radius: 50px;
+    opacity: 0.9;
+    font-weight: bold;
 }
 
 .fileDrop {

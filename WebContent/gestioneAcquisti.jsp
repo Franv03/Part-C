@@ -1,23 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"
-import="java.util.ArrayList,acquisto.Ordine,utente.User,java.text.DecimalFormat" %>
+import="java.util.ArrayList,acquisto.Ordine,java.text.DecimalFormat"%>
 
 <%
 ArrayList<Ordine> ordini = (ArrayList<Ordine>) request.getAttribute("ordini");
 DecimalFormat df = new DecimalFormat("#.00");
 %>
-<!DOCTYPE html>
-<html lang="it" dir="ltr">
-<head>
-  <link rel="shortcut icon" type="image/gif" href="../img/logo.png">
-  <meta charset="utf-8">
-  <meta name="viewport" content="initial-scale = 1, width = device-width">
-  <link id="mystylesheet" rel="stylesheet" type="text/css" href="CSS/style.css">
-  <script src="JS/scripts.js"></script>
-  <title>Amministrazione</title>
-</head>
 
-<body>
+<!DOCTYPE html>
+
+<html lang="it">
+
+<head>
+<meta charset="UTF-8">
+<link href="CSS/style.css" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="img/logo/logo.svg">
+<title>Gestione Acquisti</title>
+
+<!-- NAVBAR -->
+
 <header class="navbar">
 	<div class="navContainer">
 		<div class="centerPosition">
@@ -27,56 +28,90 @@ DecimalFormat df = new DecimalFormat("#.00");
 			<a class="navBrand" href="index.jsp">P<span>art-</span>C</a>
 		</div>
 
-		<div class="centerPosition">
-			<ul class="NavbarSub">
-				<li><a class="navLink" href="Admin">Gestione Prodotti</a></li>
-				<li><a class="navLink" href="AdminUsers">Gestione Profili</a></li>
-				<li><a class="navLink" href="Ordini">Gestione Acquisti</a></li>
-			</ul>
-		</div>
+	<div class="centerPosition">
+		<ul class="NavbarSub">
+			<li><a class="navLink" href="Admin">Gestione Prodotti</a></li>
+			<li><a class="navLink" href="AdminUsers">Gestione Profili</a></li>
+			<li><a class="navLink" href="Ordini">Gestione Acquisti</a></li>
+		</ul>
 	</div>
+</div>
+
+
 </header>
 
-<main>
-	<div class="bg">
-  <div class="filterAdmin">
-    <a href="Ordini"><input type="text" value="RIMUOVI FILTRO"></a>
-    <form id="filterForm" method="POST" action="Ordini">
-      <input name="user" id="orderFilter" type="input" placeholder="filter..."/>
-      <input type="date" name="start" value="<%=java.time.LocalDate.now()%>"/>
-      <input type="date" name="end" value="<%=java.time.LocalDate.now()%>"/>
-      <input id="btnFilter" type="submit" value="FILTRA"/>
-    </form>
-  </div>
+</head>
 
-  <table>
-    <tr>
-      <th colspan="2">E-MAIL</th>
-      <th>ID ORDINE</th>
-      <th>DATA</th>
-      <th>QUANTITA'</th>
-      <th>PRODOTTO</th>
-      <th>TIPO</th>
-      <th>COSTO</th>
-    </tr>
-    <% if (ordini != null && !ordini.isEmpty()) {
-        for (Ordine o : ordini) { %>
-    <tr>
-      <td colspan="2"><%=o.getEmail()%></td>
-      <td><%=o.getID_ordine()%></td>
-      <td><%=o.getData_acquisto()%></td>
-      <td><%=o.getQ_acquisto()%></td>
-      <td><%=o.getNome_prodotto()%></td>
-      <td><%=o.getCategoria_prodotto()%></td>
-      <td><%=df.format(o.getPrezzo())%>€</td>
-    </tr>
-    <% } } else { %>
-    <tr>
-      <td colspan="8">Nessun ordine trovato.</td>
-    </tr>
-    <% } %>
-  </table>
-  </div>
+<body>
+
+<main>
+<div class="bg">
+<div class="container">
+
+<h2 style="text-align:center;">Gestione Acquisti</h2>
+
+<!-- FILTRO -->
+
+<div class="filterAdmin">
+
+
+<a href="Ordini" class="addBtn">RIMUOVI FILTRO</a>
+</a>
+</a>
+
+<form class="filterForm" method="POST" action="Ordini">
+
+<input name="user" id="orderFilter" type="text" placeholder="Email utente..."/>
+
+<input type="date" name="start" value="<%=java.time.LocalDate.now()%>"/>
+
+<input type="date" name="end" value="<%=java.time.LocalDate.now()%>"/>
+
+<button type="submit" class="addBtnFilter">FILTRA</button>
+
+</form>
+</div>
+
+<%
+if(ordini != null && !ordini.isEmpty()){
+for(Ordine o : ordini){
+%>
+
+<div class="itemContainer">
+<div class="cart-item">
+<div class="cartRow">
+
+<h5><%=o.getEmail()%></h5>
+
+<h5>Ordine #<%=o.getID_ordine()%></h5>
+
+<h5><%=o.getData_acquisto()%></h5>
+
+<h5>Quantità: <%=o.getQ_acquisto()%></h5>
+
+<h5><%=o.getNome_prodotto()%></h5>
+
+<h5><%=o.getCategoria_prodotto()%></h5>
+
+<h5><%=df.format(o.getPrezzo())%>€</h5>
+
+</div>
+</div>
+</div>
+
+<%
+}
+} else {
+%>
+
+<p style="text-align:center;">Nessun ordine trovato</p>
+
+<%
+}
+%>
+
+</div>
+</div>
 </main>
 
 </body>
