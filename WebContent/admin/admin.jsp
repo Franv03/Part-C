@@ -42,7 +42,7 @@ ArrayList<ProductBean> prodotti =
 <section>
 <div class="container">
 <h2 style="text-align:center;">Gestione Prodotti</h2>
-<a href="<%=request.getContextPath()%>/aggiungiProd.jsp" class="addBtn">Aggiungi Prodotto</a>
+<a href="<%=request.getContextPath()%>/admin/aggiungiProd.jsp" class="addBtn">Aggiungi Prodotto</a>
 
 <%
 if(prodotti != null && !prodotti.isEmpty()){
@@ -136,7 +136,7 @@ if(prodotti != null && !prodotti.isEmpty()){
         <h3>Sei sicuro di eliminare questo prodotto?</h3>
         <form class="popup-content" action="<%=request.getContextPath()%>/EliminaServlet" method="post">
             <input type="hidden" name="id" id="deleteCode">
-            <button type="submit" class="btnAction">Sì</button>
+            <button type="submit" class="btnActionDelete">Sì</button>
             <button type="button" class="btnAction" onclick="closeDeletePopup()">No</button>
         </form>
     </div>

@@ -53,7 +53,7 @@ public class OrdiniServlet extends HttpServlet {
         }
 
         request.setAttribute("ordini", o);  // <- importante, deve essere request!
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/gestioneAcquisti.jsp");
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/admin/gestioneAcquisti.jsp");
         dispatcher.forward(request, response);
     }
 

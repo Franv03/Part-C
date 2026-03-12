@@ -32,7 +32,7 @@ public class AdminUsersServlet extends HttpServlet {
             request.setAttribute("utenti", utenti);
 
             // Forward alla pagina corretta (gestioneAccount.jsp)
-            request.getRequestDispatcher("/gestioneAccount.jsp").forward(request, response);
+            request.getRequestDispatcher("/admin/gestioneAccount.jsp").forward(request, response);
         } catch (SQLException e) {
             e.printStackTrace();
         }
