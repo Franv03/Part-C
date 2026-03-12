@@ -12,24 +12,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- * Servlet implementation class OrdiniServlet
- */
 @WebServlet("/Ordini")
 public class OrdiniServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public OrdiniServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         OrderDaoDataSource source = new OrderDaoDataSource();
         ArrayList<Ordine> o = new ArrayList<>();
@@ -52,14 +43,11 @@ public class OrdiniServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        request.setAttribute("ordini", o);  // <- importante, deve essere request!
+        request.setAttribute("ordini", o); 
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/admin/gestioneAcquisti.jsp");
         dispatcher.forward(request, response);
     }
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);

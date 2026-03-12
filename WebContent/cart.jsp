@@ -89,29 +89,6 @@
 
 						<%} %>
 						
-					<!-- <%//if(c.getCount()!=0){ %>
-						<div class="itemContainer">
-							<div class="cart-item">
-								<div class="cartRow">
-									<img id="pImg2" src="img/icons/truck.svg" alt="">
-									<h5 class="itemName">Spedizione</h5>
-									<h5>
-										<span id="price">50</span> &#128;
-									</h5>
-									<div class="last">
-										<div class="dataContainer center-item">
-											<h5>
-												<span id="Qty">1</span>
-											</h5>
-											<a class="modifyBtn">
-												
-											</a>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<%//} %> -->
 						<div class="itemContainer">
 							<div class="cart-item">
 								<div class="cartRow">
