@@ -56,8 +56,7 @@ DecimalFormat df = new DecimalFormat("#.00");
 
 
 <a href="Ordini" class="addBtn">RIMUOVI FILTRO</a>
-</a>
-</a>
+
 
 <form class="filterForm" method="POST" action="Ordini">
 
