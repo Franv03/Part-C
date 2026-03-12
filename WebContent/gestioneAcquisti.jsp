@@ -1,14 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"
-import="java.util.ArrayList,acquisto.Ordine,java.text.DecimalFormat"%>
+import="java.util.ArrayList, acquisto.Ordine, java.text.DecimalFormat"%>
 
 <%
 ArrayList<Ordine> ordini = (ArrayList<Ordine>) request.getAttribute("ordini");
 DecimalFormat df = new DecimalFormat("#.00");
+
+/* recupero valori filtro */
+String user = request.getParameter("user");
+String start = request.getParameter("start");
+String end = request.getParameter("end");
+
+if(user == null) user = "";
+if(start == null) start = java.time.LocalDate.now().toString();
+if(end == null) end = java.time.LocalDate.now().toString();
 %>
 
 <!DOCTYPE html>
-
 <html lang="it">
 
 <head>
@@ -16,101 +24,87 @@ DecimalFormat df = new DecimalFormat("#.00");
 <link href="CSS/style.css" rel="stylesheet">
 <link rel="icon" type="image/svg+xml" href="img/logo/logo.svg">
 <title>Gestione Acquisti</title>
-
-<!-- NAVBAR -->
-
-<header class="navbar">
-	<div class="navContainer">
-		<div class="centerPosition">
-			<a href="index.jsp">
-				<img class="logo" src="img/logo/logo.svg">
-			</a>
-			<a class="navBrand" href="index.jsp">P<span>art-</span>C</a>
-		</div>
-
-	<div class="centerPosition">
-		<ul class="NavbarSub">
-			<li><a class="navLink" href="Admin">Gestione Prodotti</a></li>
-			<li><a class="navLink" href="AdminUsers">Gestione Profili</a></li>
-			<li><a class="navLink" href="Ordini">Gestione Acquisti</a></li>
-		</ul>
-	</div>
-</div>
-
-
-</header>
-
 </head>
 
 <body>
 
+<header class="navbar">
+    <div class="navContainer">
+        <div class="centerPosition">
+            <a href="index.jsp">
+                <img class="logo" src="img/logo/logo.svg">
+            </a>
+            <a class="navBrand" href="index.jsp">P<span>art-</span>C</a>
+        </div>
+        <div class="centerPosition">
+            <ul class="NavbarSub">
+                <li><a class="navLink" href="Admin">Gestione Prodotti</a></li>
+                <li><a class="navLink" href="AdminUsers">Gestione Profili</a></li>
+                <li><a class="navLink" href="Ordini">Gestione Acquisti</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+
 <main>
-<div class="bg">
-<div class="container">
+    <div class="bg">
+        <div class="container">
 
-<h2 style="text-align:center;">Gestione Acquisti</h2>
+            <h2>Gestione Acquisti</h2>
 
-<!-- FILTRO -->
+            <!-- FILTRO -->
+            <div class="filterAdmin">
 
-<div class="filterAdmin">
+                <a href="Ordini" class="addBtn">RIMUOVI FILTRO</a>
 
+                <form class="filterForm" method="POST" action="Ordini">
 
-<a href="Ordini" class="addBtn">RIMUOVI FILTRO</a>
+                    <input name="user" id="orderFilter" type="text" placeholder="Email utente..."
+                           value="<%= user %>"/>
 
+                    <input type="date" name="start" value="<%= start %>"/>
 
-<form class="filterForm" method="POST" action="Ordini">
+                    <input type="date" name="end" value="<%= end %>"/>
 
-<input name="user" id="orderFilter" type="text" placeholder="Email utente..."/>
+                    <button type="submit" class="addBtnFilter">FILTRA</button>
 
-<input type="date" name="start" value="<%=java.time.LocalDate.now()%>"/>
+                </form>
+            </div>
 
-<input type="date" name="end" value="<%=java.time.LocalDate.now()%>"/>
+            <%
+            if(ordini != null && !ordini.isEmpty()){
+                for(Ordine o : ordini){
+            %>
 
-<button type="submit" class="addBtnFilter">FILTRA</button>
+            <div class="itemContainer">
+                <div class="cart-item">
+                    <div class="cartRow">
 
-</form>
-</div>
+                        <h5><%= o.getEmail() %></h5>
+                        <h5>Ordine #<%= o.getID_ordine() %></h5>
+                        <h5><%= o.getData_acquisto() %></h5>
+                        <h5>Quantità: <%= o.getQ_acquisto() %></h5>
+                        <h5><%= o.getNome_prodotto() %></h5>
+                        <h5><%= o.getCategoria_prodotto() %></h5>
+                        <h5><%= df.format(o.getPrezzo()) %>€</h5>
 
-<%
-if(ordini != null && !ordini.isEmpty()){
-for(Ordine o : ordini){
-%>
+                    </div>
+                </div>
+            </div>
 
-<div class="itemContainer">
-<div class="cart-item">
-<div class="cartRow">
+            <%
+                }
+            } else {
+            %>
 
-<h5><%=o.getEmail()%></h5>
+            <p>Nessun ordine trovato</p>
 
-<h5>Ordine #<%=o.getID_ordine()%></h5>
+            <%
+            }
+            %>
 
-<h5><%=o.getData_acquisto()%></h5>
-
-<h5>Quantità: <%=o.getQ_acquisto()%></h5>
-
-<h5><%=o.getNome_prodotto()%></h5>
-
-<h5><%=o.getCategoria_prodotto()%></h5>
-
-<h5><%=df.format(o.getPrezzo())%>€</h5>
-
-</div>
-</div>
-</div>
-
-<%
-}
-} else {
-%>
-
-<p style="text-align:center;">Nessun ordine trovato</p>
-
-<%
-}
-%>
-
-</div>
-</div>
+        </div>
+    </div>
 </main>
 
 </body>
