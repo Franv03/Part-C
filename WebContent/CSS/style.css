@@ -1161,3 +1161,9 @@ footer .navbar .NavbarSub li .navLinkFooter:before {
 		width: 10%;
 	}
 }
+
+@media ( min-width : 2025px) {
+	.imgBox {
+		height: 500px;
+	}
+}

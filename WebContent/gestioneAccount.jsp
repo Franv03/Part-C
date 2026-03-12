@@ -58,11 +58,11 @@ if(utenti != null && !utenti.isEmpty()){
 
     
 
-    <!-- Dati utente -->
+	<h5><%=u.isAdmin() ? "Admin" : "Utente"%></h5>
     <h5><%=u.getNome()%></h5>
     <h5><%=u.getCognome()%></h5>
     <h5><%=u.getEmail()%></h5>
-    <h5><%=u.isAdmin() ? "Admin" : "Utente"%></h5>
+    
 
     <!-- Azioni -->
     <div class="last">
