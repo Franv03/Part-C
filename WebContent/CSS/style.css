@@ -828,6 +828,18 @@ main {
 	margin-bottom: 30px;
 }
 
+.myh2 {
+	text-align: center;
+}
+
+.myP {
+	margin-left: 20px;
+}
+
+#myH3 {
+	text-align: center;
+}
+
 .loginForm input[type="text"], .loginForm input[type="password"] {
 	padding: 10px;
 	margin-bottom: 20px;

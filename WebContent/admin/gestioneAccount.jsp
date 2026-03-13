@@ -43,7 +43,7 @@ ArrayList<User> utenti =
 <div class="bg">
 <div class="container">
 
-<h2 style="text-align:center;">Gestione Utenti</h2>
+<h2 class="myh2">Gestione Utenti</h2>
 
 <%
 if(utenti != null && !utenti.isEmpty()){
@@ -121,7 +121,7 @@ if(utenti != null && !utenti.isEmpty()){
 
                 <br><br>
 
-                <button class="btnAction" type="submit">Salva</button>
+                <button class="btnActionDelete" type="submit">Salva</button>
 
             </form>
 
@@ -140,7 +140,7 @@ if(utenti != null && !utenti.isEmpty()){
 
             <form action="DeleteUserServlet" method="post">
                 <input type="hidden" name="email" id="deleteEmail">
-                <button type="submit" class="btnAction">Sì</button>
+                <button type="submit" class="btnActionDelete">Sì</button>
                 <button type="button" class="popup-content button" onclick="closeDeletePopup()">Annulla</button>
             </form>
 

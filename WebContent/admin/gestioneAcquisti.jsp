@@ -48,9 +48,9 @@ if(end == null) end = java.time.LocalDate.now().toString();
 
 <main>
     <div class="bg">
+              
         <div class="container">
-
-            <h2>Gestione Acquisti</h2>
+  <h2 class = "myh2">Gestione Acquisti</h2>
 
             <!-- FILTRO -->
             <div class="filterAdmin">
@@ -97,7 +97,7 @@ if(end == null) end = java.time.LocalDate.now().toString();
             } else {
             %>
 
-            <p>Nessun ordine trovato</p>
+            <p class="myP">Nessun ordine trovato</p>
 
             <%
             }

@@ -41,7 +41,7 @@ ArrayList<ProductBean> prodotti =
 <div class="bg">
 <section>
 <div class="container">
-<h2 style="text-align:center;">Gestione Prodotti</h2>
+<h2 class = "myh2"">Gestione Prodotti</h2>
 <a href="<%=request.getContextPath()%>/admin/aggiungiProd.jsp" class="addBtn">Aggiungi Prodotto</a>
 
 <%
@@ -97,7 +97,7 @@ if(prodotti != null && !prodotti.isEmpty()){
     }
 } else {
 %>
-<p style="text-align:center;">Nessun prodotto disponibile</p>
+<p class="myP">Nessun prodotto disponibile</p>
 <%
 }
 %>
@@ -111,7 +111,7 @@ if(prodotti != null && !prodotti.isEmpty()){
 <div class="popup-overlay" id="editPopupOverlay">
     <div class="popup">
         <a class="close" onclick="closeEditPopup()">x</a>
-        <h3>Modifica prodotto</h3>
+        <h3 id="myH3">Modifica prodotto</h3>
         <form action="<%=request.getContextPath()%>/AggiornaProdottoServlet" method="post">
             <input type="hidden" name="id" id="editCode">
 
@@ -124,7 +124,7 @@ if(prodotti != null && !prodotti.isEmpty()){
                 <option value="0">Non disponibile</option>
             </select>
 
-            <button type="submit" class="btnAction">Salva</button>
+            <button type="submit" class="btnActionDelete">Salva</button>
         </form>
     </div>
 </div>
