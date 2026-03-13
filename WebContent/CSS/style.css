@@ -667,6 +667,16 @@ main {
 	height: 50px;
 }
 
+#empty-cart-message .cartRow{
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+#empty-cart-message .imgContainer{
+    margin-bottom: 15px;
+}
+
 .itemName {
 	width: 35%;
 }
@@ -732,6 +742,10 @@ main {
 	width: 25px;
 	height: 25px;
 	margin-left:5px
+}
+
+#cartVuoto {
+	font-size: 20px;
 }
 
 .status {

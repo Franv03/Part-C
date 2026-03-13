@@ -49,11 +49,28 @@
 								<div class="cartRow">
 									<div class="imgContainer center-item">
 										<img id="pImg" class="kaioken" src="img/products/emptyProduct.png" alt="">
-										<h5 >Il tuo carrello e' vuoto</h5>
+
 									</div>
 									<div class="dataContainer center-item">
-										<h5>Non ci sono articoli nel tuo carrello. Torna al
-											negozio e aggiungi alcuni!</h5>
+										<h5>
+C'era una Case dove i vari componenti davano ascolto, chi piu' velocemente, chi meno, alla Scheda madre.<br><br>
+
+La Scheda madre: "CPU, hai fatto i compiti? Se non li hai fatti, è il momento"<br>
+La CPU: "Eseguo!"<br><br>
+
+Scheda madre chiede alla RAM: "Hai studiato anche tu per l'interrogazione di domani?"<br>
+La RAM: "Oh, no! Lo avevo deallocato dalla memoria!"<br><br>
+
+La scheda madre alla PSU: "Come ti senti per la partita di domani?"<br>
+La PSU: "Carico!"<br><br>
+
+La scheda madre alla Storage: "Potresti conservare questi ricordi?"<br>
+La Storage: "Li salvo su un disco"<br><br>
+
+La scheda madre alla Scheda video: "Allora, quel progetto sul videogioco?"<br>
+La Scheda video: "Te lo faccio vedere subito!"<br><br>
+</h5>
+<h5 id="cartVuoto">Il Carrello è vuoto ma aspettiamo di dare un componente da amare anche alla vostra Case!</h5>
 									</div>
 								</div>
 							</div>
