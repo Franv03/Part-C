@@ -14,6 +14,34 @@ body {
 	margin: 0;
 }
 
+.newBody {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #3b5d50;
+        }
+.error-container {
+	text-align: center;
+	padding-bottom: 600px;
+	width: 100%;
+}
+
+.raddrizza{
+	align-content:center;
+}
+	
+.error-container-h1 {
+     font-size: 3em;
+            color: #CE8946;
+        }
+        .error-container-p {
+            color: #fff;
+        }
+
 *::-webkit-scrollbar {
 	width: 0px;
 }
@@ -937,6 +965,24 @@ main {
 }
 
 .btnActionDelete:hover {
+    background-color: #B06E2E;
+}
+
+.btnActionError {
+    padding: 10px;
+    display: inline-block;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    border: none;
+    text-decoration: none;
+    background-color: #CE8946;
+    color: #fff;
+    border-radius: 20px;
+    width: 100px;
+}
+
+.btnActionError:hover {
     background-color: #B06E2E;
 }
 

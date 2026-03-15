@@ -132,7 +132,7 @@ if(utenti != null && !utenti.isEmpty()){
 <div class="popup-overlay" id="deletePopupOverlay">
     <div class="popup">
 
-        <a class="close" onclick="closeDeletePopup()">x</a>
+
 
         <div class="popup-content">
 

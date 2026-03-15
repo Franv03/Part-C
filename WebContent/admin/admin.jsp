@@ -132,7 +132,7 @@ if(prodotti != null && !prodotti.isEmpty()){
 <!-- Popup conferma eliminazione -->
 <div class="popup-overlay" id="deletePopupOverlay">
     <div class="popup">
-        <a class="close" onclick="closeDeletePopup()">x</a>
+
         <h3>Sei sicuro di eliminare questo prodotto?</h3>
         <form class="popup-content" action="<%=request.getContextPath()%>/EliminaServlet" method="post">
             <input type="hidden" name="id" id="deleteCode">
